@@ -21,7 +21,7 @@ def parseargs():
     )
     options = parser.parse_args()
     args = vars(options).values()
-    diff = generate_diff(*args)
+    print(generate_diff(*args))
 
 
 def get_diff_for_key(dict1, dict2, key):
@@ -61,9 +61,8 @@ def generate_diff(file_path1, file_path2, format='plain'):
             key
         )
     result_list = list(map(lambda x: f'{x[0]} {x[1]}: {x[2]}', result_list))
-    result_list = '{\n  ' + '\n  '.join(result_list) + '\n}'
-    print(result_list)
-    return result_list
+    result = '{\n  ' + '\n  '.join(result_list) + '\n}'
+    return result
 
 
 def main():
