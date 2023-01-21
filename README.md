@@ -9,18 +9,17 @@ To install package run:
 2) _make package-install_
 3) Now you can run Difference calculator:
 ---
-Usage: gendiff [-h] [-f FORMAT] first_file second_file
+Usage:   gendiff [-h] [-f FORMAT] first_file second_file
 
 Compares two configuration files and shows a difference.
 
 positional arguments:
-  first_file
-  second_file
+  1) first_file
+  2) second_file
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -f FORMAT, --format FORMAT
-                        set format of output
+  1) -h, --help            show this help message and exit
+  2) -f FORMAT, --format FORMAT        set format of output
 ---
 Example:
     
