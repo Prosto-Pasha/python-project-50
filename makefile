@@ -1,20 +1,30 @@
-install: # Установить пакет
+install:
 	poetry install
 
-build: # Собрать пакет
-	poetry build
-
-publish: # Опубликовать пакет
+publish:
 	poetry publish --dry-run
 
-package-install: # Установить пакет
+package-install:
 	python3 -m pip install --user dist/*.whl
 
-package-reinstall: # Переустановить пакет
+package-reinstall:
 	python3 -m pip install --force-reinstall --user dist/*.whl
 
-make lint: # Проверить пакет
-	poetry run flake8 brain_games
+selfcheck:
+	poetry check
 
-gendiff: # Запустить gendiff
+test-coverage:
+	poetry run pytest --cov=gendiff --cov-report xml
+
+lint:
+	poetry run flake8 gendiff
+
+check: selfcheck lint
+
+build: check
+	poetry build
+
+gendiff:
 	poetry run gendiff
+
+.PHONY: install test lint selfcheck check build
