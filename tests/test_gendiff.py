@@ -5,8 +5,8 @@ def test_generate_diff():
     '''
     Тест функции generate_diff
     '''
-    file_path1 = '/home/pasha/python-project-50/samples/file1.json'
-    file_path2 = '/home/pasha/python-project-50/samples/file2.json'
+    file_path1 = 'fixtures/file1.json'
+    file_path2 = 'fixtures/file2.json'
     format = 'plain'
     correct_result = '''{
   - follow: False
