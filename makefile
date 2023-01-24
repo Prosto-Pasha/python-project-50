@@ -24,6 +24,9 @@ check: selfcheck lint
 build: check
 	poetry build
 
+test-gendiff:
+	poetry run test_gendiff
+
 gendiff:
 	poetry run gendiff
 
