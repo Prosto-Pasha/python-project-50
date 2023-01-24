@@ -28,6 +28,7 @@ jobs:
       - name: Install pytest
         run: |
           pip install pytest
+          pip install pytest-cov
       - name: Run linter and pytest
         run: |
           make check
