@@ -1,12 +1,21 @@
+import pytest
 from gendiff.scripts.gendiff import generate_diff
 
 
-def test_generate_diff():
+@pytest.fixture
+def get_file1():
+    return 'tests/fixtures/file1.json'
+
+
+@pytest.fixture
+def get_file2():
+    return 'tests/fixtures/file2.json'
+
+
+def test_generate_diff(get_file1, get_file2):
     '''
-    Тест функции generate_diff
+    Тест функции generate_diff с тестовыми файлами
     '''
-    file_path1 = 'fixtures/file1.json'
-    file_path2 = 'fixtures/file2.json'
     format = 'plain'
     correct_result = '''{
   - follow: False
@@ -16,5 +25,5 @@ def test_generate_diff():
   + timeout: 20
   + verbose: True
 }'''
-    result = generate_diff(file_path1, file_path2, format)
+    result = generate_diff(get_file1, get_file2, format)
     assert result == correct_result
