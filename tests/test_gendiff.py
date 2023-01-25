@@ -1,5 +1,5 @@
 import pytest
-from gendiff.scripts.gendiff import generate_diff
+from gendiff.scripts.gendiff import generate_diff, parseargs
 
 
 @pytest.fixture
@@ -27,3 +27,9 @@ def test_generate_diff(get_file1, get_file2):
 }'''
     result = generate_diff(get_file1, get_file2, format)
     assert result == correct_result
+
+
+def test_parser():
+    parser = parseargs(['file1.json', 'file2.json'])
+    assert parser.first_file == 'file1.json'
+    assert parser.second_file == 'file2.json'
