@@ -1,10 +1,20 @@
 import argparse
 import json
+import sys
 
 
-def parseargs():
+def generate_diff_cli():
     '''
-    Получает аргументы, сравнивает файлы и возвращает различия
+    Сравнивает два файла и выводит результат сравнения
+    '''
+    options = parseargs(sys.argv[1:])
+    args = vars(options).values()
+    print(generate_diff(*args))
+
+
+def parseargs(args):
+    '''
+    Возвращает аргументы, указанные при запуске
     '''
     parser = argparse.ArgumentParser(
         description="Compares two configuration files and shows a difference."
@@ -19,9 +29,7 @@ def parseargs():
         default='plain',
         # choices=['plain', 'json']
     )
-    options = parser.parse_args()
-    args = vars(options).values()
-    print(generate_diff(*args))
+    return parser.parse_args(args)
 
 
 def get_diff_for_key(dict1, dict2, key):
@@ -66,7 +74,7 @@ def generate_diff(file_path1, file_path2, format='plain'):
 
 
 def main():
-    parseargs()
+    generate_diff_cli()
 
 
 if __name__ == '__main__':
