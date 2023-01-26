@@ -23,7 +23,8 @@ optional arguments:
   1) -h, --help            show this help message and exit
   2) -f FORMAT, --format FORMAT        set format of output
 ---
-Example:
+Examples:
     
 [![asciicast](https://asciinema.org/a/Xceisf2AsCYi6QjJNkdasFfNf.svg)](https://asciinema.org/a/Xceisf2AsCYi6QjJNkdasFfNf)
- 
+
+[![asciicast](https://asciinema.org/a/mcKmOfFZw0hxbSNAVFkcRgtuM.svg)](https://asciinema.org/a/mcKmOfFZw0hxbSNAVFkcRgtuM)
