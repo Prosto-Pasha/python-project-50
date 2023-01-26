@@ -1,5 +1,5 @@
+from gendiff.scripts.compare_files import compare_json, compare_yaml
 import argparse
-import json
 import sys
 
 
@@ -32,45 +32,18 @@ def parseargs(args):
     return parser.parse_args(args)
 
 
-def get_diff_for_key(dict1, dict2, key):
-    '''
-    Сравнивает значения двух словарей
-    dict1 и dict2 по ключу key,
-    список кортежей с результатом сравнения
-    '''
-    arg1 = dict1.get(key)
-    arg2 = dict2.get(key)
-    if arg1 is None:
-        return [('+', key, arg2),]
-    if arg2 is None:
-        return [('-', key, arg1),]
-    if arg1 == arg2:
-        return [(' ', key, arg1),]
-    else:
-        return [('-', key, arg1),
-                ('+', key, arg2)]
-
-
 def generate_diff(file_path1, file_path2, format='plain'):
     '''
-    Получает пути к двум json-файлам,
+    Получает пути к двум файлам,
     возвращает строку с результатом сравнения файлов
     '''
-    dict1 = json.load(open(file_path1))
-    dict2 = json.load(open(file_path2))
-    keys1 = list(dict1.keys())
-    keys2 = list(dict2.keys())
-    all_keys = sorted(set(keys1 + keys2))
-    result_list = []
-    for key in all_keys:
-        result_list += get_diff_for_key(
-            dict1,
-            dict2,
-            key
-        )
-    result_list = list(map(lambda x: f'{x[0]} {x[1]}: {x[2]}', result_list))
-    result = '{\n  ' + '\n  '.join(result_list) + '\n}'
-    return result
+    file1_ext = file_path1[-4:].upper()
+    file2_ext = file_path1[-4:].upper()
+    yaml_ext = ('.YML', 'YAML')
+    if file1_ext == 'JSON' and file2_ext == 'JSON':
+        return compare_json(file_path1, file_path2, format)
+    if file1_ext in yaml_ext and file2_ext in yaml_ext:
+        return compare_yaml(file_path1, file_path2, format)
 
 
 def main():
