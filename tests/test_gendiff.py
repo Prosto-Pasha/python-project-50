@@ -13,6 +13,16 @@ def get_file2_json():
 
 
 @pytest.fixture
+def get_file3_json():
+    return 'tests/fixtures/file3.json'
+
+
+@pytest.fixture
+def get_file4_json():
+    return 'tests/fixtures/file4.json'
+
+
+@pytest.fixture
 def get_file1_yml():
     return 'tests/fixtures/file1.yml'
 
@@ -23,7 +33,7 @@ def get_file2_yml():
 
 
 @pytest.fixture
-def correct_result():
+def correct_result1():
     return '''{
   - follow: False
     host: hexlet.io
@@ -34,30 +44,91 @@ def correct_result():
 }'''
 
 
+@pytest.fixture
+def correct_result2():
+    return '''{
+    common: {
+      + follow: false
+        setting1: Value 1
+      - setting2: 200
+      - setting3: true
+      + setting3: null
+      + setting4: blah blah
+      + setting5: {
+            key5: value5
+        }
+        setting6: {
+            doge: {
+              - wow: 
+              + wow: so much
+            }
+            key: value
+          + ops: vops
+        }
+    }
+    group1: {
+      - baz: bas
+      + baz: bars
+        foo: bar
+      - nest: {
+            key: value
+        }
+      + nest: str
+    }
+  - group2: {
+        abc: 12345
+        deep: {
+            id: 45
+        }
+    }
+  + group3: {
+        deep: {
+            id: {
+                number: 45
+            }
+        }
+        fee: 100500
+    }
+}'''
+
+
 def test_generate_diff_json(
         get_file1_json,
         get_file2_json,
-        correct_result
+        correct_result1
 ):
     '''
     Тест функции generate_diff с тестовыми файлами JSON
     '''
     format = 'plain'
     result = generate_diff(get_file1_json, get_file2_json, format)
-    assert result == correct_result
+    assert result == correct_result1
+
+
+def test_2_generate_diff_json(
+        get_file3_json,
+        get_file4_json,
+        correct_result2
+):
+    '''
+    Тест 2 функции generate_diff с тестовыми файлами JSON 3 и 4
+    '''
+    format = 'plain'
+    result = generate_diff(get_file3_json, get_file4_json, format)
+    assert result == correct_result2
 
 
 def test_generate_diff_yml(
         get_file1_yml,
         get_file2_yml,
-        correct_result
+        correct_result1
 ):
     '''
     Тест функции generate_diff с тестовыми файлами YML, YAML
     '''
     format = 'plain'
     result = generate_diff(get_file1_yml, get_file2_yml, format)
-    assert result == correct_result
+    assert result == correct_result1
 
 
 def test_parser():
