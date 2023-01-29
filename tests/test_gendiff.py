@@ -33,6 +33,16 @@ def get_file2_yml():
 
 
 @pytest.fixture
+def get_file3_yml():
+    return 'tests/fixtures/file3.yaml'
+
+
+@pytest.fixture
+def get_file4_yml():
+    return 'tests/fixtures/file4.yaml'
+
+
+@pytest.fixture
 def correct_result1():
     return '''{
   - follow: False
@@ -129,6 +139,19 @@ def test_generate_diff_yml(
     format = 'plain'
     result = generate_diff(get_file1_yml, get_file2_yml, format)
     assert result == correct_result1
+
+
+def test2_generate_diff_yml(
+        get_file3_yml,
+        get_file4_yml,
+        correct_result2
+):
+    '''
+    Тест 2 функции generate_diff с тестовыми файлами YML, YAML 3 и 4
+    '''
+    format = 'plain'
+    result = generate_diff(get_file3_yml, get_file4_yml, format)
+    assert result == correct_result2
 
 
 def test_parser():
