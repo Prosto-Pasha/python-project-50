@@ -32,7 +32,7 @@ def parseargs(args):
     return parser.parse_args(args)
 
 
-def generate_diff(file_path1, file_path2, format='plain'):
+def generate_diff(file_path1, file_path2, format='stylish'):
     '''
     Получает пути к двум файлам,
     возвращает строку с результатом сравнения файлов
