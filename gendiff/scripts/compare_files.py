@@ -20,10 +20,8 @@ def get_item(arg_d, key):
     is_bool = isinstance(arg, bool)
     if arg is None:
         result = 'null'
-    elif is_bool and arg:
-        result = 'true'
-    elif is_bool and not arg:
-        result = 'false'
+    elif is_bool:
+        result = 'true' if arg else 'false'
     else:
         result = str(arg)
     return result
