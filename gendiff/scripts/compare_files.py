@@ -47,7 +47,7 @@ def get_diff_for_key(dict1, dict2, key):
         result = [(BLANK_STR, key, get_diff_list(arg1, arg2))]
     else:
         result = [(MINUS_STR, key, arg1),
-                (PLUS_STR, key, arg2)]
+                  (PLUS_STR, key, arg2)]
     return result
 
 
