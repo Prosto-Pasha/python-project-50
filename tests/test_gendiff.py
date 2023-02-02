@@ -45,12 +45,12 @@ def get_file4_yml():
 @pytest.fixture
 def correct_result1():
     return '''{
-  - follow: False
+  - follow: false
     host: hexlet.io
   - proxy: 123.234.53.22
   - timeout: 50
   + timeout: 20
-  + verbose: True
+  + verbose: true
 }'''
 
 
