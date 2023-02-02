@@ -8,19 +8,25 @@ MINUS_STR = '  - '
 
 
 def get_item(arg_d, key):
+    """
+    Возвращает преобразованное значение
+    словаря arg_d по ключу key
+    """
     if key not in arg_d:
         return None
     arg = arg_d[key]
-    if arg is None:
-        return 'null'
-    is_bool = isinstance(arg, bool)
-    if is_bool and arg:
-        return 'true'
-    if is_bool and not arg:
-        return 'false'
     if isinstance(arg, dict):
         return arg
-    return str(arg)
+    is_bool = isinstance(arg, bool)
+    if arg is None:
+        result = 'null'
+    elif is_bool and arg:
+        result = 'true'
+    elif is_bool and not arg:
+        result = 'false'
+    else:
+        result = str(arg)
+    return result
 
 
 def get_diff_for_key(dict1, dict2, key):
@@ -32,16 +38,17 @@ def get_diff_for_key(dict1, dict2, key):
     arg1 = get_item(dict1, key)
     arg2 = get_item(dict2, key)
     if arg1 == arg2:
-        return [(BLANK_STR, key, arg1)]
-    if arg1 is None:
-        return [(PLUS_STR, key, arg2)]
-    if arg2 is None:
-        return [(MINUS_STR, key, arg1)]
-    # Оба значения есть и они не равны
-    if isinstance(arg1, dict) and isinstance(arg2, dict):
-        return [(BLANK_STR, key, get_diff_list(arg1, arg2))]
-    return [(MINUS_STR, key, arg1),
-            (PLUS_STR, key, arg2)]
+        result = [(BLANK_STR, key, arg1)]
+    elif arg1 is None:
+        result = [(PLUS_STR, key, arg2)]
+    elif arg2 is None:
+        result = [(MINUS_STR, key, arg1)]
+    elif isinstance(arg1, dict) and isinstance(arg2, dict):
+        result = [(BLANK_STR, key, get_diff_list(arg1, arg2))]
+    else:
+        result = [(MINUS_STR, key, arg1),
+                (PLUS_STR, key, arg2)]
+    return result
 
 
 def get_diff_list(dict1, dict2):
