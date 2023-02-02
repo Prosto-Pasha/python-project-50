@@ -26,7 +26,7 @@ def parseargs(args):
         "-f", "--format",
         help="set format of output",
         type=str,
-        default='plain',
+        default='stylish',
         # choices=['plain', 'json']
     )
     return parser.parse_args(args)
