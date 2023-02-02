@@ -12,7 +12,7 @@ def get_item(arg_d, key):
         return None
     arg = arg_d[key]
     if arg is None:
-        return 'none'
+        return 'null'
     is_bool = isinstance(arg, bool)
     if is_bool and arg:
         return 'true'
