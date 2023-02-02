@@ -13,6 +13,7 @@ def bool_to_str(arg):
     """
     return 'true' if arg else 'false'
 
+
 def get_item(arg_d, key):
     """
     Возвращает преобразованное значение
