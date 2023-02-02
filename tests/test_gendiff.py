@@ -110,7 +110,7 @@ def test_generate_diff_json(
     '''
     Тест функции generate_diff с тестовыми файлами JSON
     '''
-    format = 'plain'
+    format = 'stylish'
     result = generate_diff(get_file1_json, get_file2_json, format)
     assert result == correct_result1
 
@@ -123,7 +123,7 @@ def test_2_generate_diff_json(
     '''
     Тест 2 функции generate_diff с тестовыми файлами JSON 3 и 4
     '''
-    format = 'plain'
+    format = 'stylish'
     result = generate_diff(get_file3_json, get_file4_json, format)
     assert result == correct_result2
 
@@ -136,8 +136,8 @@ def test_generate_diff_yml(
     '''
     Тест функции generate_diff с тестовыми файлами YML, YAML
     '''
-    format = 'plain'
-    result = generate_diff(get_file1_yml, get_file2_yml, format)
+    # default format
+    result = generate_diff(get_file1_yml, get_file2_yml)
     assert result == correct_result1
 
 
@@ -149,7 +149,7 @@ def test2_generate_diff_yml(
     '''
     Тест 2 функции generate_diff с тестовыми файлами YML, YAML 3 и 4
     '''
-    format = 'plain'
+    format = 'stylish'
     result = generate_diff(get_file3_yml, get_file4_yml, format)
     assert result == correct_result2
 
