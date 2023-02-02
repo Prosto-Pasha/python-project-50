@@ -7,6 +7,12 @@ PLUS_STR = '  + '
 MINUS_STR = '  - '
 
 
+def bool_to_str(arg):
+    """
+    Преобразует булево к строке
+    """
+    return 'true' if arg else 'false'
+
 def get_item(arg_d, key):
     """
     Возвращает преобразованное значение
@@ -21,7 +27,7 @@ def get_item(arg_d, key):
     if arg is None:
         result = 'null'
     elif is_bool:
-        result = 'true' if arg else 'false'
+        result = bool_to_str(arg)
     else:
         result = str(arg)
     return result
