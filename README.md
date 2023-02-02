@@ -28,3 +28,5 @@ Examples:
 [![asciicast](https://asciinema.org/a/Xceisf2AsCYi6QjJNkdasFfNf.svg)](https://asciinema.org/a/Xceisf2AsCYi6QjJNkdasFfNf)
 
 [![asciicast](https://asciinema.org/a/mcKmOfFZw0hxbSNAVFkcRgtuM.svg)](https://asciinema.org/a/mcKmOfFZw0hxbSNAVFkcRgtuM)
+
+[![asciicast](https://asciinema.org/a/O0zmSOcTQOrr3oXLdi9QRsUGu.svg)](https://asciinema.org/a/O0zmSOcTQOrr3oXLdi9QRsUGu)
