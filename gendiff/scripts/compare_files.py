@@ -1,3 +1,4 @@
+from gendiff.scripts.format_diff import get_diff_string
 import json
 import yaml
 
@@ -73,42 +74,12 @@ def get_diff_list(dict1, dict2):
     return result
 
 
-def get_diff_string(diff_l, indent=0):
-    """
-    Возвращает строковое представление
-    по списку различий двух словарей
-    """
-    result = []
-    is_list = isinstance(diff_l, list)
-    is_dict = isinstance(diff_l, dict)
-    if not is_list and not is_dict:
-        return str(diff_l)
-    result.append('{')
-    if is_dict:
-        for key, arg in diff_l.items():
-            start_str = BLANK_STR * (indent + 1)
-            arg_str = get_diff_string(arg, indent + 1)
-            result.append(f'{start_str}{key}: {arg_str}')
-    indent_str = BLANK_STR * indent
-    if is_list:
-        for arg in diff_l:
-            start_str = arg[0]
-            key_str = arg[1]
-            arg_str = get_diff_string(arg[2], indent + 1)
-            result.append(f'{indent_str}{start_str}{key_str}: {arg_str}')
-    result.append(f'{indent_str}}}')
-    result = '\n'.join(result)
-    return result
-
-
 def compare_dict(dict1, dict2, format):
     """
     Возвращает строку с результатом сравнения двух словарей.
     """
     diff_list = get_diff_list(dict1, dict2)
-    if format == 'stylish':
-        return get_diff_string(diff_list)
-    return diff_list
+    return get_diff_string(diff_list, format)
 
 
 def compare_json(file_path1, file_path2, format):
