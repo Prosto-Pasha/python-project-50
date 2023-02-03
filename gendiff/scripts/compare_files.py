@@ -82,23 +82,14 @@ def compare_dict(dict1, dict2, format):
     return get_diff_string(diff_list, format)
 
 
-def compare_json(file_path1, file_path2, format):
+def compare_files(file_path1, file_path2, format, file_type):
     """
     Возвращает результат сравнения двух json-файлов
     """
-    return compare_dict(
-        json.load(open(file_path1)),
-        json.load(open(file_path2)),
-        format
-    )
-
-
-def compare_yaml(file_path1, file_path2, format):
-    """
-    Возвращает результат сравнения двух yaml-файлов
-    """
-    return compare_dict(
-        yaml.safe_load(open(file_path1)),
-        yaml.safe_load(open(file_path2)),
-        format
-    )
+    if file_type == 'JSON':
+        dict1 = json.load(open(file_path1))
+        dict2 = json.load(open(file_path2))
+    else:
+        dict1 = yaml.safe_load(open(file_path1))
+        dict2 = yaml.safe_load(open(file_path2))
+    return compare_dict(dict1, dict2, format)
