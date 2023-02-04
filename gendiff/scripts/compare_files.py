@@ -6,6 +6,7 @@ import yaml
 BLANK_STR = '    '
 PLUS_STR = '  + '
 MINUS_STR = '  - '
+MINUS_PLUS_STR = ' -+ '
 
 
 def bool_to_str(arg):
@@ -39,21 +40,20 @@ def get_diff_for_key(dict1, dict2, key):
     '''
     Сравнивает значения двух словарей
     dict1 и dict2 по ключу key, возвращает
-    список кортежей с результатом сравнения
+    список кортеж с результатом сравнения
     '''
     arg1 = get_item(dict1, key)
     arg2 = get_item(dict2, key)
     if arg1 == arg2:
-        result = [(BLANK_STR, key, arg1)]
+        result = (BLANK_STR, key, arg1, arg2)
     elif arg1 is None:
-        result = [(PLUS_STR, key, arg2)]
+        result = (PLUS_STR, key, arg1, arg2)
     elif arg2 is None:
-        result = [(MINUS_STR, key, arg1)]
+        result = (MINUS_STR, key, arg1, arg2)
     elif isinstance(arg1, dict) and isinstance(arg2, dict):
-        result = [(BLANK_STR, key, get_diff_list(arg1, arg2))]
+        result = (BLANK_STR, key, get_diff_list(arg1, arg2), None)
     else:
-        result = [(MINUS_STR, key, arg1),
-                  (PLUS_STR, key, arg2)]
+        result = (MINUS_PLUS_STR, key, arg1, arg2)
     return result
 
 
@@ -66,11 +66,7 @@ def get_diff_list(dict1, dict2):
     keys2 = list(dict2.keys())
     all_keys = sorted(set(keys1 + keys2))
     for key in all_keys:
-        result += get_diff_for_key(
-            dict1,
-            dict2,
-            key
-        )
+        result.append(get_diff_for_key(dict1, dict2, key))
     return result
 
 
@@ -84,7 +80,7 @@ def compare_dict(dict1, dict2, format):
 
 def compare_files(file_path1, file_path2, format, file_type):
     """
-    Возвращает результат сравнения двух json-файлов
+    Возвращает текстовый результат сравнения двух файлов
     """
     if file_type == 'JSON':
         dict1 = json.load(open(file_path1))

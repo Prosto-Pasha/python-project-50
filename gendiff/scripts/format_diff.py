@@ -1,8 +1,45 @@
 BLANK_STR = '    '
+PLUS_STR = '  + '
+MINUS_STR = '  - '
+MINUS_PLUS_STR = ' -+ '
+
+
+def get_args_str(arg1, arg2, indent):
+    """
+    Возвращает строковое представление
+    аргументов arg1 и arg2 для
+    типа различия diff_type
+    с учетом отступа indent
+    в формате  stylish
+    """
+    arg1_str = None if arg1 is None else get_stylish(arg1, indent + 1)
+    arg2_str = None if arg2 is None else get_stylish(arg2, indent + 1)
+    return arg1_str, arg2_str
+
+
+def get_list_items(arg1_str, arg2_str, diff_type, indent_str, key_str):
+    """
+    Возвращает элементы для списка различий
+    в формате  stylish
+    """
+    arg1_list_item = None
+    arg2_list_item = None
+    start_str = f'{indent_str}{diff_type}{key_str}: '
+    if diff_type == BLANK_STR:
+        arg1_list_item = f'{start_str}{arg1_str}'
+    elif diff_type == PLUS_STR:
+        arg2_list_item = f'{start_str}{arg2_str}'
+    elif diff_type == MINUS_STR:
+        arg1_list_item = f'{start_str}{arg1_str}'
+    elif diff_type == MINUS_PLUS_STR:
+        arg1_list_item = f'{indent_str}{MINUS_STR}{key_str}: {arg1_str}'
+        arg2_list_item = f'{indent_str}{PLUS_STR}{key_str}: {arg2_str}'
+    return arg1_list_item, arg2_list_item
 
 
 def get_stylish(diff_l, indent=0):
     """
+    (l[0] - diff type, l[1] - diff key, l[2] - arg1, l[3] - arg2)
     Возвращает строковое представление
     по списку различий двух словарей
     в формате stylish
@@ -21,10 +58,24 @@ def get_stylish(diff_l, indent=0):
     indent_str = BLANK_STR * indent
     if is_list:
         for arg in diff_l:
-            start_str = arg[0]
+            diff_type = arg[0]  # ''  '-'  '+'  '-+'
             key_str = arg[1]
-            arg_str = get_stylish(arg[2], indent + 1)
-            result.append(f'{indent_str}{start_str}{key_str}: {arg_str}')
+            arg1_str, arg2_str = get_args_str(
+                arg[2],
+                arg[3],
+                indent
+            )
+            arg1_list_item, arg2_list_item = get_list_items(
+                arg1_str,
+                arg2_str,
+                diff_type,
+                indent_str,
+                key_str
+            )
+            if arg1_list_item is not None:
+                result.append(arg1_list_item)
+            if arg2_list_item is not None:
+                result.append(arg2_list_item)
     result.append(f'{indent_str}}}')
     result = '\n'.join(result)
     return result
