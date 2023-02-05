@@ -499,6 +499,16 @@ def test_6_generate_diff_yml(
     assert result == correct_result6
 
 
+def test_unsupported_files():
+    """
+    Тест функции generate_diff
+    с неподдерживаемыми файлами
+    формат по умолчанию
+    """
+    result = generate_diff('some_file1.txt', 'some_file2.txt')
+    assert result == 'Unsupported files!'
+
+
 def test_parser():
     parser = parseargs(['file1.json', 'file2.json'])
     assert parser.first_file == 'file1.json'
