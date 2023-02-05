@@ -1,4 +1,5 @@
-from gendiff.scripts.format_diff import get_diff_string
+from gendiff.format_scripts.format_plain import get_plain
+from gendiff.format_scripts.format_stylish import get_stylish
 import json
 import yaml
 
@@ -37,11 +38,11 @@ def get_item(arg_d, key):
 
 
 def get_diff_for_key(dict1, dict2, key):
-    '''
+    """
     Сравнивает значения двух словарей
     dict1 и dict2 по ключу key, возвращает
     список кортеж с результатом сравнения
-    '''
+    """
     arg1 = get_item(dict1, key)
     arg2 = get_item(dict2, key)
     if arg1 == arg2:
@@ -75,7 +76,9 @@ def compare_dict(dict1, dict2, format):
     Возвращает строку с результатом сравнения двух словарей.
     """
     diff_list = get_diff_list(dict1, dict2)
-    return get_diff_string(diff_list, format)
+    return get_stylish(diff_list)\
+        if format == 'stylish'\
+        else get_plain(diff_list)
 
 
 def compare_files(file_path1, file_path2, format, file_type):
