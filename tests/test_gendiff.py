@@ -182,7 +182,7 @@ def correct_result5():
 
 
 @pytest.fixture
-def correct_result6()
+def correct_result6():
     """
     Результат сравнения файлов 3 и 4
     (json и yaml) в формате json
