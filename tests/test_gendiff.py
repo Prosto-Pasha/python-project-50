@@ -207,7 +207,7 @@ def correct_result6():
       [
         "  - ",
         "setting2",
-        "200",
+        200,
         null
       ],
       [
