@@ -114,7 +114,6 @@ def correct_result2():
     return f'{start_str}{space_symbol}{end_str}'
 
 
-
 @pytest.fixture
 def correct_result3():
     """
