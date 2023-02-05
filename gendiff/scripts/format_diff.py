@@ -37,6 +37,28 @@ def get_list_items(arg1_str, arg2_str, diff_type, indent_str, key_str):
     return arg1_list_item, arg2_list_item
 
 
+def update_result_from_list(diff_l, indent, result):
+    for arg in diff_l:
+        diff_type = arg[0]  # ''  '-'  '+'  '-+'
+        key_str = arg[1]
+        arg1_str, arg2_str = get_args_str(
+            arg[2],
+            arg[3],
+            indent
+        )
+        arg1_list_item, arg2_list_item = get_list_items(
+            arg1_str,
+            arg2_str,
+            diff_type,
+            BLANK_STR * indent,
+            key_str
+        )
+        if arg1_list_item is not None:
+            result.append(arg1_list_item)
+        if arg2_list_item is not None:
+            result.append(arg2_list_item)
+
+
 def get_stylish(diff_l, indent=0):
     """
     Возвращает строковое представление
@@ -54,28 +76,9 @@ def get_stylish(diff_l, indent=0):
             start_str = BLANK_STR * (indent + 1)
             arg_str = get_stylish(arg, indent + 1)
             result.append(f'{start_str}{key}: {arg_str}')
-    indent_str = BLANK_STR * indent
     if is_list:
-        for arg in diff_l:
-            diff_type = arg[0]  # ''  '-'  '+'  '-+'
-            key_str = arg[1]
-            arg1_str, arg2_str = get_args_str(
-                arg[2],
-                arg[3],
-                indent
-            )
-            arg1_list_item, arg2_list_item = get_list_items(
-                arg1_str,
-                arg2_str,
-                diff_type,
-                indent_str,
-                key_str
-            )
-            if arg1_list_item is not None:
-                result.append(arg1_list_item)
-            if arg2_list_item is not None:
-                result.append(arg2_list_item)
-    result.append(f'{indent_str}}}')
+        update_result_from_list(diff_l, indent, result)
+    result.append(f'{BLANK_STR * indent}}}')
     result = '\n'.join(result)
     return result
 
