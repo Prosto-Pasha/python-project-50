@@ -30,3 +30,5 @@ Examples:
 [![asciicast](https://asciinema.org/a/mcKmOfFZw0hxbSNAVFkcRgtuM.svg)](https://asciinema.org/a/mcKmOfFZw0hxbSNAVFkcRgtuM)
 
 [![asciicast](https://asciinema.org/a/O0zmSOcTQOrr3oXLdi9QRsUGu.svg)](https://asciinema.org/a/O0zmSOcTQOrr3oXLdi9QRsUGu)
+
+[![asciicast](https://asciinema.org/a/Zwvgi842SlKqoPbBmH25qKzCr.svg)](https://asciinema.org/a/Zwvgi842SlKqoPbBmH25qKzCr)
