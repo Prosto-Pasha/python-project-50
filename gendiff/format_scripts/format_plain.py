@@ -11,7 +11,7 @@ def get_value_str(arg):
     """
     if isinstance(arg, dict):
         return '[complex value]'
-    if arg in ('true', 'false', 'null'):
+    if arg in ('true', 'false', 'null') or isinstance(arg, int):
         return arg
     return f"'{arg}'"
 

@@ -34,7 +34,8 @@ def get_item(arg_d, key):
     elif is_bool:
         result = bool_to_str(arg)
     else:
-        result = str(arg)
+        # result = str(arg)
+        result = arg
     return result
 
 
