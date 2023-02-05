@@ -1,5 +1,6 @@
 from gendiff.format_scripts.format_plain import get_plain
 from gendiff.format_scripts.format_stylish import get_stylish
+from gendiff.format_scripts.format_json import get_json
 import json
 import yaml
 
@@ -76,9 +77,14 @@ def compare_dict(dict1, dict2, format):
     Возвращает строку с результатом сравнения двух словарей.
     """
     diff_list = get_diff_list(dict1, dict2)
-    return get_stylish(diff_list)\
-        if format == 'stylish'\
-        else get_plain(diff_list)
+    result = ''
+    if format == 'stylish':
+        result = get_stylish(diff_list)
+    elif format == 'plain':
+        result = get_plain(diff_list)
+    elif format == 'json':
+        result = get_json(diff_list)
+    return result
 
 
 def compare_files(file_path1, file_path2, format, file_type):

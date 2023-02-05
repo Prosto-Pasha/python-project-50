@@ -141,6 +141,184 @@ Property 'group2' was removed
 Property 'group3' was added with value: [complex value]'''
 
 
+@pytest.fixture
+def correct_result5():
+    """
+    Результат сравнения файлов 1 и 2
+    (json и yaml) в формате json
+    """
+    return '''[
+  [
+    "  - ",
+    "follow",
+    "false",
+    null
+  ],
+  [
+    "    ",
+    "host",
+    "hexlet.io",
+    "hexlet.io"
+  ],
+  [
+    "  - ",
+    "proxy",
+    "123.234.53.22",
+    null
+  ],
+  [
+    " -+ ",
+    "timeout",
+    "50",
+    "20"
+  ],
+  [
+    "  + ",
+    "verbose",
+    null,
+    "true"
+  ]
+]'''
+
+
+@pytest.fixture
+def correct_result6()
+    """
+    Результат сравнения файлов 3 и 4
+    (json и yaml) в формате json
+    """
+    return '''[
+  [
+    "    ",
+    "common",
+    [
+      [
+        "  + ",
+        "follow",
+        null,
+        "false"
+      ],
+      [
+        "    ",
+        "setting1",
+        "Value 1",
+        "Value 1"
+      ],
+      [
+        "  - ",
+        "setting2",
+        "200",
+        null
+      ],
+      [
+        " -+ ",
+        "setting3",
+        "true",
+        "null"
+      ],
+      [
+        "  + ",
+        "setting4",
+        null,
+        "blah blah"
+      ],
+      [
+        "  + ",
+        "setting5",
+        null,
+        {
+          "key5": "value5"
+        }
+      ],
+      [
+        "    ",
+        "setting6",
+        [
+          [
+            "    ",
+            "doge",
+            [
+              [
+                " -+ ",
+                "wow",
+                "",
+                "so much"
+              ]
+            ],
+            null
+          ],
+          [
+            "    ",
+            "key",
+            "value",
+            "value"
+          ],
+          [
+            "  + ",
+            "ops",
+            null,
+            "vops"
+          ]
+        ],
+        null
+      ]
+    ],
+    null
+  ],
+  [
+    "    ",
+    "group1",
+    [
+      [
+        " -+ ",
+        "baz",
+        "bas",
+        "bars"
+      ],
+      [
+        "    ",
+        "foo",
+        "bar",
+        "bar"
+      ],
+      [
+        " -+ ",
+        "nest",
+        {
+          "key": "value"
+        },
+        "str"
+      ]
+    ],
+    null
+  ],
+  [
+    "  - ",
+    "group2",
+    {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    },
+    null
+  ],
+  [
+    "  + ",
+    "group3",
+    null,
+    {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
+    }
+  ]
+]'''
+
+
 def test_generate_diff_json(
         get_file1_json,
         get_file2_json,
@@ -201,6 +379,36 @@ def test_4_generate_diff_json(
     assert result == correct_result4
 
 
+def test_5_generate_diff_json(
+        get_file1_json,
+        get_file2_json,
+        correct_result5
+):
+    """
+    Тест 4 функции generate_diff
+    с тестовыми файлами JSON 1 и 2
+    формат json
+    """
+    format = 'json'
+    result = generate_diff(get_file1_json, get_file2_json, format)
+    assert result == correct_result5
+
+
+def test_6_generate_diff_json(
+        get_file3_json,
+        get_file4_json,
+        correct_result6
+):
+    """
+    Тест 6 функции generate_diff
+    с тестовыми файлами JSON 3 и 4
+    формат json
+    """
+    format = 'json'
+    result = generate_diff(get_file3_json, get_file4_json, format)
+    assert result == correct_result6
+
+
 def test_generate_diff_yml(
         get_file1_yml,
         get_file2_yml,
@@ -259,6 +467,36 @@ def test_4_generate_diff_yml(
     format = 'plain'
     result = generate_diff(get_file3_yml, get_file4_yml, format)
     assert result == correct_result4
+
+
+def test_5_generate_diff_yml(
+        get_file1_yml,
+        get_file2_yml,
+        correct_result5
+):
+    """
+    Тест 5 функции generate_diff
+    с тестовыми файлами YML, YAML 1 и 2
+    формат json
+    """
+    format = 'json'
+    result = generate_diff(get_file1_yml, get_file2_yml, format)
+    assert result == correct_result5
+
+
+def test_6_generate_diff_yml(
+        get_file3_yml,
+        get_file4_yml,
+        correct_result6
+):
+    """
+    Тест 6 функции generate_diff
+    с тестовыми файлами YML, YAML 3 и 4
+    формат json
+    """
+    format = 'json'
+    result = generate_diff(get_file3_yml, get_file4_yml, format)
+    assert result == correct_result6
 
 
 def test_parser():
