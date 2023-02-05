@@ -64,7 +64,9 @@ def correct_result2():
     Результат сравнения файлов 3 и 4
     (json и yaml) в формате stylish
     """
-    return '''{
+    # Иначе линтер ругается на пробел в конце строки
+    space_symbol = ' '
+    start_str = '''{
     common: {
       + follow: false
         setting1: Value 1
@@ -77,7 +79,8 @@ def correct_result2():
         }
         setting6: {
             doge: {
-              - wow: 
+              - wow:'''
+    end_str = '''
               + wow: so much
             }
             key: value
@@ -108,6 +111,8 @@ def correct_result2():
         fee: 100500
     }
 }'''
+    return f'{start_str}{space_symbol}{end_str}'
+
 
 
 @pytest.fixture
