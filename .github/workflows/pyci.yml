@@ -18,10 +18,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
         # make depends on poetry
-      #- name: Install dependencies
-      #  run: |
-      #    pip install poetry
-      #    make install
+      - name: Install dependencies
+        run: pip install poetry
+          make install
       #- name: Install PyYaml
       #  run: |
       #    pip install pyyaml
