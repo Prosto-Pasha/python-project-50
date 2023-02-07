@@ -57,7 +57,9 @@ def correct_result2():
     Результат сравнения файлов 3 и 4
     (json и yaml) в формате stylish
     """
-    return open('tests/fixtures/correct_result2.txt').read()
+    start_text = open('tests/fixtures/correct_result2.txt').read()
+    end_text = open('tests/fixtures/correct_result2_end.txt').read()
+    return f'{start_text} {end_text}'
 
 
 @pytest.fixture
