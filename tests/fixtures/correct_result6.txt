@@ -1,0 +1,130 @@
+[
+  [
+    "    ",
+    "common",
+    [
+      [
+        "  + ",
+        "follow",
+        null,
+        "false"
+      ],
+      [
+        "    ",
+        "setting1",
+        "Value 1",
+        "Value 1"
+      ],
+      [
+        "  - ",
+        "setting2",
+        200,
+        null
+      ],
+      [
+        " -+ ",
+        "setting3",
+        "true",
+        "null"
+      ],
+      [
+        "  + ",
+        "setting4",
+        null,
+        "blah blah"
+      ],
+      [
+        "  + ",
+        "setting5",
+        null,
+        {
+          "key5": "value5"
+        }
+      ],
+      [
+        "    ",
+        "setting6",
+        [
+          [
+            "    ",
+            "doge",
+            [
+              [
+                " -+ ",
+                "wow",
+                "",
+                "so much"
+              ]
+            ],
+            null
+          ],
+          [
+            "    ",
+            "key",
+            "value",
+            "value"
+          ],
+          [
+            "  + ",
+            "ops",
+            null,
+            "vops"
+          ]
+        ],
+        null
+      ]
+    ],
+    null
+  ],
+  [
+    "    ",
+    "group1",
+    [
+      [
+        " -+ ",
+        "baz",
+        "bas",
+        "bars"
+      ],
+      [
+        "    ",
+        "foo",
+        "bar",
+        "bar"
+      ],
+      [
+        " -+ ",
+        "nest",
+        {
+          "key": "value"
+        },
+        "str"
+      ]
+    ],
+    null
+  ],
+  [
+    "  - ",
+    "group2",
+    {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    },
+    null
+  ],
+  [
+    "  + ",
+    "group3",
+    null,
+    {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
+    }
+  ]
+]

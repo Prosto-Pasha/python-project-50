@@ -3,42 +3,42 @@ from gendiff.scripts.gendiff import generate_diff, parseargs
 
 
 @pytest.fixture
-def get_file1_json():
+def file1_json():
     return 'tests/fixtures/file1.json'
 
 
 @pytest.fixture
-def get_file2_json():
+def file2_json():
     return 'tests/fixtures/file2.json'
 
 
 @pytest.fixture
-def get_file3_json():
+def file3_json():
     return 'tests/fixtures/file3.json'
 
 
 @pytest.fixture
-def get_file4_json():
+def file4_json():
     return 'tests/fixtures/file4.json'
 
 
 @pytest.fixture
-def get_file1_yml():
+def file1_yml():
     return 'tests/fixtures/file1.yml'
 
 
 @pytest.fixture
-def get_file2_yml():
+def file2_yml():
     return 'tests/fixtures/file2.yml'
 
 
 @pytest.fixture
-def get_file3_yml():
+def file3_yml():
     return 'tests/fixtures/file3.yaml'
 
 
 @pytest.fixture
-def get_file4_yml():
+def file4_yml():
     return 'tests/fixtures/file4.yaml'
 
 
@@ -48,14 +48,7 @@ def correct_result1():
     Результат сравнения файлов 1 и 2
     (json и yaml) в формате stylish
     """
-    return '''{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}'''
+    return open('tests/fixtures/correct_result1.txt').read()
 
 
 @pytest.fixture
@@ -64,54 +57,7 @@ def correct_result2():
     Результат сравнения файлов 3 и 4
     (json и yaml) в формате stylish
     """
-    # Иначе линтер ругается на пробел в конце строки
-    space_symbol = ' '
-    start_str = '''{
-    common: {
-      + follow: false
-        setting1: Value 1
-      - setting2: 200
-      - setting3: true
-      + setting3: null
-      + setting4: blah blah
-      + setting5: {
-            key5: value5
-        }
-        setting6: {
-            doge: {
-              - wow:'''
-    end_str = '''
-              + wow: so much
-            }
-            key: value
-          + ops: vops
-        }
-    }
-    group1: {
-      - baz: bas
-      + baz: bars
-        foo: bar
-      - nest: {
-            key: value
-        }
-      + nest: str
-    }
-  - group2: {
-        abc: 12345
-        deep: {
-            id: 45
-        }
-    }
-  + group3: {
-        deep: {
-            id: {
-                number: 45
-            }
-        }
-        fee: 100500
-    }
-}'''
-    return f'{start_str}{space_symbol}{end_str}'
+    return open('tests/fixtures/correct_result2.txt').read()
 
 
 @pytest.fixture
@@ -120,10 +66,7 @@ def correct_result3():
     Результат сравнения файлов 1 и 2
     (json и yaml) в формате plain
     """
-    return '''Property 'follow' was removed
-Property 'proxy' was removed
-Property 'timeout' was updated. From 50 to 20
-Property 'verbose' was added with value: true'''
+    return open('tests/fixtures/correct_result3.txt').read()
 
 
 @pytest.fixture
@@ -132,17 +75,7 @@ def correct_result4():
     Результат сравнения файлов 3 и 4
     (json и yaml) в формате plain
     """
-    return '''Property 'common.follow' was added with value: false
-Property 'common.setting2' was removed
-Property 'common.setting3' was updated. From true to null
-Property 'common.setting4' was added with value: 'blah blah'
-Property 'common.setting5' was added with value: [complex value]
-Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
-Property 'common.setting6.ops' was added with value: 'vops'
-Property 'group1.baz' was updated. From 'bas' to 'bars'
-Property 'group1.nest' was updated. From [complex value] to 'str'
-Property 'group2' was removed
-Property 'group3' was added with value: [complex value]'''
+    return open('tests/fixtures/correct_result4.txt').read()
 
 
 @pytest.fixture
@@ -151,38 +84,7 @@ def correct_result5():
     Результат сравнения файлов 1 и 2
     (json и yaml) в формате json
     """
-    return '''[
-  [
-    "  - ",
-    "follow",
-    "false",
-    null
-  ],
-  [
-    "    ",
-    "host",
-    "hexlet.io",
-    "hexlet.io"
-  ],
-  [
-    "  - ",
-    "proxy",
-    "123.234.53.22",
-    null
-  ],
-  [
-    " -+ ",
-    "timeout",
-    50,
-    20
-  ],
-  [
-    "  + ",
-    "verbose",
-    null,
-    "true"
-  ]
-]'''
+    return open('tests/fixtures/correct_result5.txt').read()
 
 
 @pytest.fixture
@@ -191,316 +93,37 @@ def correct_result6():
     Результат сравнения файлов 3 и 4
     (json и yaml) в формате json
     """
-    return '''[
-  [
-    "    ",
-    "common",
-    [
-      [
-        "  + ",
-        "follow",
-        null,
-        "false"
-      ],
-      [
-        "    ",
-        "setting1",
-        "Value 1",
-        "Value 1"
-      ],
-      [
-        "  - ",
-        "setting2",
-        200,
-        null
-      ],
-      [
-        " -+ ",
-        "setting3",
-        "true",
-        "null"
-      ],
-      [
-        "  + ",
-        "setting4",
-        null,
-        "blah blah"
-      ],
-      [
-        "  + ",
-        "setting5",
-        null,
-        {
-          "key5": "value5"
-        }
-      ],
-      [
-        "    ",
-        "setting6",
-        [
-          [
-            "    ",
-            "doge",
-            [
-              [
-                " -+ ",
-                "wow",
-                "",
-                "so much"
-              ]
-            ],
-            null
-          ],
-          [
-            "    ",
-            "key",
-            "value",
-            "value"
-          ],
-          [
-            "  + ",
-            "ops",
-            null,
-            "vops"
-          ]
-        ],
-        null
-      ]
-    ],
-    null
-  ],
-  [
-    "    ",
-    "group1",
-    [
-      [
-        " -+ ",
-        "baz",
-        "bas",
-        "bars"
-      ],
-      [
-        "    ",
-        "foo",
-        "bar",
-        "bar"
-      ],
-      [
-        " -+ ",
-        "nest",
-        {
-          "key": "value"
-        },
-        "str"
-      ]
-    ],
-    null
-  ],
-  [
-    "  - ",
-    "group2",
-    {
-      "abc": 12345,
-      "deep": {
-        "id": 45
-      }
-    },
-    null
-  ],
-  [
-    "  + ",
-    "group3",
-    null,
-    {
-      "deep": {
-        "id": {
-          "number": 45
-        }
-      },
-      "fee": 100500
-    }
-  ]
-]'''
+    return open('tests/fixtures/correct_result6.txt').read()
 
 
-def test_generate_diff_json(
-        get_file1_json,
-        get_file2_json,
-        correct_result1
-):
-    '''
-    Тест функции generate_diff
-    с тестовыми файлами JSON 1 и 2
-    формат stylish
-    '''
-    format = 'stylish'
-    result = generate_diff(get_file1_json, get_file2_json, format)
-    assert result == correct_result1
-
-
-def test_2_generate_diff_json(
-        get_file3_json,
-        get_file4_json,
-        correct_result2
-):
+@pytest.mark.parametrize("file1,file2,correct_result,format", [
+    ('file1_json', 'file2_json', 'correct_result1', 'stylish'),
+    ('file3_json', 'file4_json', 'correct_result2', 'stylish'),
+    ('file1_json', 'file2_json', 'correct_result3', 'plain'),
+    ('file3_json', 'file4_json', 'correct_result4', 'plain'),
+    ('file1_json', 'file2_json', 'correct_result5', 'json'),
+    ('file3_json', 'file4_json', 'correct_result6', 'json'),
+    ('file1_yml', 'file2_yml', 'correct_result1', None),
+    ('file3_yml', 'file4_yml', 'correct_result2', 'stylish'),
+    ('file1_yml', 'file2_yml', 'correct_result3', 'plain'),
+    ('file3_yml', 'file4_yml', 'correct_result4', 'plain'),
+    ('file1_yml', 'file2_yml', 'correct_result5', 'json'),
+    ('file3_yml', 'file4_yml', 'correct_result6', 'json'),
+])
+def test_eval(file1, file2, correct_result, format, request):
     """
-    Тест 2 функции generate_diff
-    с тестовыми файлами JSON 3 и 4
-    формат stylish
+    Тесты функции generate_diff
+    с тестовыми файлами JSON и YAML
+    с выводом результата в разных форматах
     """
-    format = 'stylish'
-    result = generate_diff(get_file3_json, get_file4_json, format)
-    assert result == correct_result2
-
-
-def test_3_generate_diff_json(
-        get_file1_json,
-        get_file2_json,
-        correct_result3
-):
-    """
-    Тест 3 функции generate_diff
-    с тестовыми файлами JSON 1 и 2
-    формат plain
-    """
-    format = 'plain'
-    result = generate_diff(get_file1_json, get_file2_json, format)
-    assert result == correct_result3
-
-
-def test_4_generate_diff_json(
-        get_file3_json,
-        get_file4_json,
-        correct_result4
-):
-    """
-    Тест 4 функции generate_diff
-    с тестовыми файлами JSON 3 и 4
-    формат plain
-    """
-    format = 'plain'
-    result = generate_diff(get_file3_json, get_file4_json, format)
-    assert result == correct_result4
-
-
-def test_5_generate_diff_json(
-        get_file1_json,
-        get_file2_json,
-        correct_result5
-):
-    """
-    Тест 4 функции generate_diff
-    с тестовыми файлами JSON 1 и 2
-    формат json
-    """
-    format = 'json'
-    result = generate_diff(get_file1_json, get_file2_json, format)
-    assert result == correct_result5
-
-
-def test_6_generate_diff_json(
-        get_file3_json,
-        get_file4_json,
-        correct_result6
-):
-    """
-    Тест 6 функции generate_diff
-    с тестовыми файлами JSON 3 и 4
-    формат json
-    """
-    format = 'json'
-    result = generate_diff(get_file3_json, get_file4_json, format)
-    assert result == correct_result6
-
-
-def test_generate_diff_yml(
-        get_file1_yml,
-        get_file2_yml,
-        correct_result1
-):
-    """
-    Тест 1 функции generate_diff
-    с тестовыми файлами YML, YAML 1 и 2
-    default формат (stylish)
-    """
-    # default format
-    result = generate_diff(get_file1_yml, get_file2_yml)
-    assert result == correct_result1
-
-
-def test_2_generate_diff_yml(
-        get_file3_yml,
-        get_file4_yml,
-        correct_result2
-):
-    """
-    Тест 2 функции generate_diff
-    с тестовыми файлами YML, YAML 3 и 4
-    формат stylish
-    """
-    format = 'stylish'
-    result = generate_diff(get_file3_yml, get_file4_yml, format)
-    assert result == correct_result2
-
-
-def test_3_generate_diff_yml(
-        get_file1_yml,
-        get_file2_yml,
-        correct_result3
-):
-    """
-    Тест 3 функции generate_diff
-    с тестовыми файлами YML, YAML 1 и 2
-    формат plain
-    """
-    format = 'plain'
-    result = generate_diff(get_file1_yml, get_file2_yml, format)
-    assert result == correct_result3
-
-
-def test_4_generate_diff_yml(
-        get_file3_yml,
-        get_file4_yml,
-        correct_result4
-):
-    """
-    Тест 4 функции generate_diff
-    с тестовыми файлами YML, YAML 3 и 4
-    формат plain
-    """
-    format = 'plain'
-    result = generate_diff(get_file3_yml, get_file4_yml, format)
-    assert result == correct_result4
-
-
-def test_5_generate_diff_yml(
-        get_file1_yml,
-        get_file2_yml,
-        correct_result5
-):
-    """
-    Тест 5 функции generate_diff
-    с тестовыми файлами YML, YAML 1 и 2
-    формат json
-    """
-    format = 'json'
-    result = generate_diff(get_file1_yml, get_file2_yml, format)
-    assert result == correct_result5
-
-
-def test_6_generate_diff_yml(
-        get_file3_yml,
-        get_file4_yml,
-        correct_result6
-):
-    """
-    Тест 6 функции generate_diff
-    с тестовыми файлами YML, YAML 3 и 4
-    формат json
-    """
-    format = 'json'
-    result = generate_diff(get_file3_yml, get_file4_yml, format)
-    assert result == correct_result6
+    file1 = request.getfixturevalue(file1)
+    file2 = request.getfixturevalue(file2)
+    correct_result = request.getfixturevalue(correct_result)
+    if format is None:
+        result = generate_diff(file1, file2)
+    else:
+        result = generate_diff(file1, file2, format)
+    assert result == correct_result
 
 
 def test_unsupported_files():
