@@ -5,6 +5,15 @@ description = ""
 authors = ["Pavel Beliavskii <prostopasha@gmail.com>"]
 readme = "README.md"
 packages = [{include = "gendiff"}]
+repository = "https://github.com/Prosto-Pasha/python-project-50"
+
+classifiers = [
+    'Topic :: Utilities',
+    'Programming Language :: Python',
+    'Development Status :: 3 - Alpha',
+    'Environment :: Console',
+    'License :: Freeware',
+]
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
