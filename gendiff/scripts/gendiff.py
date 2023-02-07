@@ -27,7 +27,7 @@ def parseargs(args):
         help="set format of output",
         type=str,
         default='stylish',
-        # choices=['plain', 'json']
+        choices=['stylish', 'plain', 'json']
     )
     return parser.parse_args(args)
 
