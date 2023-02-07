@@ -1,8 +1,7 @@
 from gendiff.format_scripts.format_plain import get_plain
 from gendiff.format_scripts.format_stylish import get_stylish
 from gendiff.format_scripts.format_json import get_json
-import json
-import yaml
+from gendiff.format_scripts.parse_data import parse
 
 
 BLANK_STR = '    '
@@ -88,14 +87,10 @@ def compare_dict(dict1, dict2, format):
     return result
 
 
-def compare_files(file_path1, file_path2, format, file_type):
+def compare_data(data1, data2, format, data_type):
     """
-    Возвращает текстовый результат сравнения двух файлов
+    Возвращает текстовый результат сравнения данных
     """
-    if file_type == 'JSON':
-        dict1 = json.load(open(file_path1))
-        dict2 = json.load(open(file_path2))
-    else:
-        dict1 = yaml.safe_load(open(file_path1))
-        dict2 = yaml.safe_load(open(file_path2))
-    return compare_dict(dict1, dict2, format)
+    parsed_data1 = parse(data1, data_type)
+    parsed_data2 = parse(data2, data_type)
+    return compare_dict(parsed_data1, parsed_data2, format)

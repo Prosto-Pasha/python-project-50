@@ -1,4 +1,4 @@
-from gendiff.format_scripts.compare_files import compare_files
+from gendiff.format_scripts.compare_data import compare_data
 import argparse
 import sys
 
@@ -41,12 +41,14 @@ def generate_diff(file_path1, file_path2, format='stylish'):
     file2_ext = file_path1[-4:].upper()
     yaml_ext = ('.YML', 'YAML')
     if file1_ext == 'JSON' and file2_ext == 'JSON':
-        file_type = 'JSON'
+        data_type = 'JSON'
     elif file1_ext in yaml_ext and file2_ext in yaml_ext:
-        file_type = 'YAML'
+        data_type = 'YAML'
     else:
         return 'Unsupported files!'
-    return compare_files(file_path1, file_path2, format, file_type)
+    data1 = open(file_path1)
+    data2 = open(file_path2)
+    return compare_data(data1, data2, format, data_type)
 
 
 def main():
