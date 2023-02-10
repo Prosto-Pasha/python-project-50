@@ -1,40 +1,40 @@
 [
   [
-    "    ",
+    "nested",
     "common",
     [
       [
-        "  + ",
+        "added",
         "follow",
         null,
         "false"
       ],
       [
-        "    ",
+        "unchanged",
         "setting1",
         "Value 1",
         "Value 1"
       ],
       [
-        "  - ",
+        "removed",
         "setting2",
         200,
         null
       ],
       [
-        " -+ ",
+        "changed",
         "setting3",
         "true",
         "null"
       ],
       [
-        "  + ",
+        "added",
         "setting4",
         null,
         "blah blah"
       ],
       [
-        "  + ",
+        "added",
         "setting5",
         null,
         {
@@ -42,15 +42,15 @@
         }
       ],
       [
-        "    ",
+        "nested",
         "setting6",
         [
           [
-            "    ",
+            "nested",
             "doge",
             [
               [
-                " -+ ",
+                "changed",
                 "wow",
                 "",
                 "so much"
@@ -59,13 +59,13 @@
             null
           ],
           [
-            "    ",
+            "unchanged",
             "key",
             "value",
             "value"
           ],
           [
-            "  + ",
+            "added",
             "ops",
             null,
             "vops"
@@ -77,23 +77,23 @@
     null
   ],
   [
-    "    ",
+    "nested",
     "group1",
     [
       [
-        " -+ ",
+        "changed",
         "baz",
         "bas",
         "bars"
       ],
       [
-        "    ",
+        "unchanged",
         "foo",
         "bar",
         "bar"
       ],
       [
-        " -+ ",
+        "changed",
         "nest",
         {
           "key": "value"
@@ -104,7 +104,7 @@
     null
   ],
   [
-    "  - ",
+    "removed",
     "group2",
     {
       "abc": 12345,
@@ -115,7 +115,7 @@
     null
   ],
   [
-    "  + ",
+    "added",
     "group3",
     null,
     {

@@ -4,12 +4,6 @@ from gendiff.format_scripts.format_json import get_json
 from gendiff.format_scripts.parse_data import parse
 
 
-BLANK_STR = '    '
-PLUS_STR = '  + '
-MINUS_STR = '  - '
-MINUS_PLUS_STR = ' -+ '
-
-
 def bool_to_str(arg):
     """
     Преобразует булево к строке
@@ -33,7 +27,6 @@ def get_item(arg_d, key):
     elif is_bool:
         result = bool_to_str(arg)
     else:
-        # result = str(arg)
         result = arg
     return result
 
@@ -47,15 +40,15 @@ def get_diff_for_key(dict1, dict2, key):
     arg1 = get_item(dict1, key)
     arg2 = get_item(dict2, key)
     if arg1 == arg2:
-        result = (BLANK_STR, key, arg1, arg2)
+        result = ('unchanged', key, arg1, arg2)
     elif arg1 is None:
-        result = (PLUS_STR, key, arg1, arg2)
+        result = ('added', key, arg1, arg2)
     elif arg2 is None:
-        result = (MINUS_STR, key, arg1, arg2)
+        result = ('removed', key, arg1, arg2)
     elif isinstance(arg1, dict) and isinstance(arg2, dict):
-        result = (BLANK_STR, key, get_diff_list(arg1, arg2), None)
+        result = ('nested', key, get_diff_list(arg1, arg2), None)
     else:
-        result = (MINUS_PLUS_STR, key, arg1, arg2)
+        result = ('changed', key, arg1, arg2)
     return result
 
 

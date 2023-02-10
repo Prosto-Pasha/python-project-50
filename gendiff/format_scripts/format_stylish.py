@@ -1,7 +1,11 @@
+DIFF_TYPE = {
+    'added': '  + ',
+    'removed': '  - ',
+    'unchanged': '    ',
+    'nested': '    ',
+    'changed': ' -+ ',
+}
 BLANK_STR = '    '
-PLUS_STR = '  + '
-MINUS_STR = '  - '
-MINUS_PLUS_STR = ' -+ '
 
 
 def get_args_str(arg1, arg2, indent):
@@ -24,16 +28,17 @@ def get_list_items(arg1_str, arg2_str, diff_type, indent_str, key_str):
     """
     arg1_list_item = None
     arg2_list_item = None
-    start_str = f'{indent_str}{diff_type}{key_str}: '
-    if diff_type == BLANK_STR:
+    diff = DIFF_TYPE[diff_type]
+    start_str = f'{indent_str}{diff}{key_str}: '
+    if diff_type == 'unchanged' or diff_type == 'nested':
         arg1_list_item = f'{start_str}{arg1_str}'
-    elif diff_type == PLUS_STR:
+    elif diff_type == 'added':
         arg2_list_item = f'{start_str}{arg2_str}'
-    elif diff_type == MINUS_STR:
+    elif diff_type == 'removed':
         arg1_list_item = f'{start_str}{arg1_str}'
-    elif diff_type == MINUS_PLUS_STR:
-        arg1_list_item = f'{indent_str}{MINUS_STR}{key_str}: {arg1_str}'
-        arg2_list_item = f'{indent_str}{PLUS_STR}{key_str}: {arg2_str}'
+    elif diff_type == 'changed':
+        arg1_list_item = f'{indent_str}  - {key_str}: {arg1_str}'
+        arg2_list_item = f'{indent_str}  + {key_str}: {arg2_str}'
     return arg1_list_item, arg2_list_item
 
 
@@ -44,7 +49,7 @@ def update_result_from_list(diff_l, indent, result):
     в формате  stylish
     """
     for arg in diff_l:
-        diff_type = arg[0]  # ''  '-'  '+'  '-+'
+        diff_type = arg[0]
         key_str = arg[1]
         arg1_str, arg2_str = get_args_str(
             arg[2],

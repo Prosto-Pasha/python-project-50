@@ -1,7 +1,3 @@
-BLANK_STR = '    '
-PLUS_STR = '  + '
-MINUS_STR = '  - '
-
 
 def get_value_str(arg):
     """
@@ -23,13 +19,13 @@ def get_arg1_arg2_str(diff_type, arg1, arg2):
     в формате plain
     """
     result = ''
-    if diff_type == PLUS_STR:
+    if diff_type == 'added':
         middle_text = 'was added with value:'
         value_str = get_value_str(arg2)
         result = f'{middle_text} {value_str}'
-    elif diff_type == MINUS_STR:
+    elif diff_type == 'removed':
         result = 'was removed'
-    else:  # diff_type == MINUS_PLUS_STR:
+    else:  # diff_type == 'changed':
         middle_text = 'was updated. From'
         value_str_arg1 = get_value_str(arg1)
         value_str_arg2 = get_value_str(arg2)
@@ -50,9 +46,9 @@ def get_list_item(arg, path):
         path = f'{path}.{current_path}'
     else:
         path = current_path
-    if diff_type == BLANK_STR and isinstance(arg1, list):
+    if diff_type == 'nested':
         return get_plain(arg1, path)
-    if diff_type == BLANK_STR:
+    elif diff_type == 'unchanged':
         return None
     arg1_arg2_str = get_arg1_arg2_str(diff_type, arg1, arg2)
     return f"Property '{path}' {arg1_arg2_str}"
