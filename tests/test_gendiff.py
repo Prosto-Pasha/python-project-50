@@ -2,115 +2,56 @@ import pytest
 from gendiff.scripts.gendiff import generate_diff, parseargs
 
 
-@pytest.fixture
-def file1_json():
-    return 'tests/fixtures/file1.json'
-
-
-@pytest.fixture
-def file2_json():
-    return 'tests/fixtures/file2.json'
-
-
-@pytest.fixture
-def file3_json():
-    return 'tests/fixtures/file3.json'
-
-
-@pytest.fixture
-def file4_json():
-    return 'tests/fixtures/file4.json'
-
-
-@pytest.fixture
-def file1_yml():
-    return 'tests/fixtures/file1.yml'
-
-
-@pytest.fixture
-def file2_yml():
-    return 'tests/fixtures/file2.yml'
-
-
-@pytest.fixture
-def file3_yml():
-    return 'tests/fixtures/file3.yaml'
-
-
-@pytest.fixture
-def file4_yml():
-    return 'tests/fixtures/file4.yaml'
-
-
-@pytest.fixture
-def correct_result1():
+def get_data_from_file(file_name):
     """
-    Результат сравнения файлов 1 и 2
-    (json и yaml) в формате stylish
+    Возвращает данные из файла, расположенного
+    в папке fixtures по имени файла
     """
-    return open('tests/fixtures/correct_result1.txt').read()
+    with open(get_full_file_name(file_name)) as file:
+        result = file.read()
+    return result
 
 
-@pytest.fixture
-def correct_result2():
+def get_full_file_name(file_name):
     """
-    Результат сравнения файлов 3 и 4
-    (json и yaml) в формате stylish
+    Возвращает путь к файлу в папке fixtures
+    по имени файла
     """
-    start_text = open('tests/fixtures/correct_result2.txt').read()
-    end_text = open('tests/fixtures/correct_result2_end.txt').read()
-    return f'{start_text} {end_text}'
+    return f'tests/fixtures/{file_name}'
 
 
-@pytest.fixture
-def correct_result3():
+def get_data(file_name):
     """
-    Результат сравнения файлов 1 и 2
-    (json и yaml) в формате plain
+    Возвращает данные из файла/ов
     """
-    return open('tests/fixtures/correct_result3.txt').read()
-
-
-@pytest.fixture
-def correct_result4():
-    """
-    Результат сравнения файлов 3 и 4
-    (json и yaml) в формате plain
-    """
-    return open('tests/fixtures/correct_result4.txt').read()
-
-
-@pytest.fixture
-def correct_result5():
-    """
-    Результат сравнения файлов 1 и 2
-    (json и yaml) в формате json
-    """
-    return open('tests/fixtures/correct_result5.txt').read()
-
-
-@pytest.fixture
-def correct_result6():
-    """
-    Результат сравнения файлов 3 и 4
-    (json и yaml) в формате json
-    """
-    return open('tests/fixtures/correct_result6.txt').read()
+    if isinstance(file_name, tuple):
+        start_data = get_data_from_file(file_name[0])
+        end_data = get_data_from_file(file_name[1])
+        result = ' '.join((start_data, end_data))
+    else:
+        result = get_data_from_file(file_name)
+    return result
 
 
 @pytest.mark.parametrize("file1,file2,correct_result,format", [
-    ('file1_json', 'file2_json', 'correct_result1', 'stylish'),
-    ('file3_json', 'file4_json', 'correct_result2', 'stylish'),
-    ('file1_json', 'file2_json', 'correct_result3', 'plain'),
-    ('file3_json', 'file4_json', 'correct_result4', 'plain'),
-    ('file1_json', 'file2_json', 'correct_result5', 'json'),
-    ('file3_json', 'file4_json', 'correct_result6', 'json'),
-    ('file1_yml', 'file2_yml', 'correct_result1', None),
-    ('file3_yml', 'file4_yml', 'correct_result2', 'stylish'),
-    ('file1_yml', 'file2_yml', 'correct_result3', 'plain'),
-    ('file3_yml', 'file4_yml', 'correct_result4', 'plain'),
-    ('file1_yml', 'file2_yml', 'correct_result5', 'json'),
-    ('file3_yml', 'file4_yml', 'correct_result6', 'json'),
+    ('file1.json', 'file2.json', 'correct_result1.txt', 'stylish'),
+    ('file3.json', 'file4.json', (
+            'correct_result2.txt',
+            'correct_result2_end.txt'
+    ), 'stylish'),
+    ('file1.json', 'file2.json', 'correct_result3.txt', 'plain'),
+    ('file3.json', 'file4.json', 'correct_result4.txt', 'plain'),
+    ('file1.json', 'file2.json', 'correct_result5.txt', 'json'),
+    ('file3.json', 'file4.json', 'correct_result6.txt', 'json'),
+    ('file1.yml', 'file2.yml', 'correct_result1.txt', None),
+    ('file3.yaml', 'file4.yaml', (
+            'correct_result2.txt',
+            'correct_result2_end.txt'
+    ), 'stylish'),
+    ('file1.yml', 'file2.yml', 'correct_result3.txt', 'plain'),
+    ('file3.yaml', 'file4.yaml', 'correct_result4.txt', 'plain'),
+    ('file1.yml', 'file2.yml', 'correct_result5.txt', 'json'),
+    ('file3.yaml', 'file4.yaml', 'correct_result6.txt', 'json'),
 ])
 def test_eval(file1, file2, correct_result, format, request):
     """
@@ -118,9 +59,9 @@ def test_eval(file1, file2, correct_result, format, request):
     с тестовыми файлами JSON и YAML
     с выводом результата в разных форматах
     """
-    file1 = request.getfixturevalue(file1)
-    file2 = request.getfixturevalue(file2)
-    correct_result = request.getfixturevalue(correct_result)
+    file1 = get_full_file_name(file1)
+    file2 = get_full_file_name(file2)
+    correct_result = get_data(correct_result)
     if format is None:
         result = generate_diff(file1, file2)
     else:
