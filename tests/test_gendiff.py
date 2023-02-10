@@ -36,8 +36,8 @@ def get_data(file_name):
 @pytest.mark.parametrize("file1,file2,correct_result,format", [
     ('file1.json', 'file2.json', 'correct_result1.txt', 'stylish'),
     ('file3.json', 'file4.json', (
-            'correct_result2.txt',
-            'correct_result2_end.txt'
+        'correct_result2.txt',
+        'correct_result2_end.txt'
     ), 'stylish'),
     ('file1.json', 'file2.json', 'correct_result3.txt', 'plain'),
     ('file3.json', 'file4.json', 'correct_result4.txt', 'plain'),
@@ -45,8 +45,8 @@ def get_data(file_name):
     ('file3.json', 'file4.json', 'correct_result6.txt', 'json'),
     ('file1.yml', 'file2.yml', 'correct_result1.txt', None),
     ('file3.yaml', 'file4.yaml', (
-            'correct_result2.txt',
-            'correct_result2_end.txt'
+        'correct_result2.txt',
+        'correct_result2_end.txt'
     ), 'stylish'),
     ('file1.yml', 'file2.yml', 'correct_result3.txt', 'plain'),
     ('file3.yaml', 'file4.yaml', 'correct_result4.txt', 'plain'),
