@@ -76,7 +76,7 @@ def test_unsupported_files():
     формат по умолчанию
     """
     result = generate_diff('some_file1.txt', 'some_file2.txt')
-    assert result == 'Unsupported files!'
+    assert result == 'Unsupported file format!'
 
 
 def test_parser():
