@@ -9,5 +9,7 @@ def parse(data, data_type):
     """
     if data_type == 'JSON':
         return json.load(data)
-    else:
+    elif data_type == 'YAML':
         return yaml.safe_load(data)
+    else:
+        raise Exception('Unsupported file format!')

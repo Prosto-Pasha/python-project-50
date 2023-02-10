@@ -45,7 +45,7 @@ def generate_diff(file_path1, file_path2, format='stylish'):
     elif file1_ext in yaml_ext and file2_ext in yaml_ext:
         data_type = 'YAML'
     else:
-        return 'Unsupported files!'
+        return 'Unsupported file format!'
     data1 = open(file_path1)
     data2 = open(file_path2)
     return compare_data(data1, data2, format, data_type)
