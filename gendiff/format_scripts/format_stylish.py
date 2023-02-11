@@ -21,11 +21,13 @@ def get_args_str(arg1, arg2, indent):
     return arg1_str, arg2_str
 
 
-def get_list_items(arg1_str, arg2_str, diff_type, indent_str, key_str):
+def get_list_items(args, diff_type, indent_str, key_str):
     """
     Возвращает элементы для списка различий
     в формате  stylish
     """
+    arg1_str = args[0]
+    arg2_str = args[1]
     arg1_list_item = None
     arg2_list_item = None
     diff = DIFF_TYPE[diff_type]
@@ -51,14 +53,13 @@ def update_result_from_list(diff_l, indent, result):
     for arg in diff_l:
         diff_type = arg[0]
         key_str = arg[1]
-        arg1_str, arg2_str = get_args_str(
+        args = get_args_str(
             arg[2],
             arg[3],
             indent
         )
         arg1_list_item, arg2_list_item = get_list_items(
-            arg1_str,
-            arg2_str,
+            args,
             diff_type,
             BLANK_STR * indent,
             key_str
