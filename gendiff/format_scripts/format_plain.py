@@ -62,8 +62,7 @@ def get_plain(diff_l, path=''):
     """
     result = []
     is_list = isinstance(diff_l, list)
-    is_dict = isinstance(diff_l, dict)
-    if is_dict:
+    if isinstance(diff_l, dict):
         return '[complex value]'
     if not is_list:
         return str(diff_l)
