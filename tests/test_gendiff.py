@@ -1,4 +1,5 @@
 import pytest
+from pathlib import Path
 from gendiff.scripts.gendiff import generate_diff, parseargs
 
 
@@ -7,7 +8,7 @@ def get_data_from_file(file_name):
     Возвращает данные из файла, расположенного
     в папке fixtures по имени файла
     """
-    with open(get_full_file_name(file_name)) as file:
+    with Path(get_full_file_name(file_name)).open() as file:
         result = file.read()
     return result
 
@@ -53,7 +54,7 @@ def get_data(file_name):
     ('file1.yml', 'file2.yml', 'correct_result5.txt', 'json'),
     ('file3.yaml', 'file4.yaml', 'correct_result6.txt', 'json'),
 ])
-def test_eval(file1, file2, correct_result, format, request):
+def test_eval(file1, file2, correct_result, format):
     """
     Тесты функции generate_diff
     с тестовыми файлами JSON и YAML
