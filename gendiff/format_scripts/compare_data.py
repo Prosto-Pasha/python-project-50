@@ -2,33 +2,7 @@ from gendiff.format_scripts.format_plain import get_plain
 from gendiff.format_scripts.format_stylish import get_stylish
 from gendiff.format_scripts.format_json import get_json
 from gendiff.format_scripts.parse_data import parse
-
-
-def bool_to_str(arg):
-    """
-    Преобразует булево к строке
-    """
-    return 'true' if arg else 'false'
-
-
-def get_item(arg_d, key):
-    """
-    Возвращает преобразованное значение
-    словаря arg_d по ключу key
-    """
-    if key not in arg_d:
-        return None
-    arg = arg_d[key]
-    if isinstance(arg, dict):
-        return arg
-    is_bool = isinstance(arg, bool)
-    if arg is None:
-        result = 'null'
-    elif is_bool:
-        result = bool_to_str(arg)
-    else:
-        result = arg
-    return result
+from gendiff.format_scripts.format_common import get_item
 
 
 def get_diff_for_key(dict1, dict2, key):
