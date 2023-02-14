@@ -1,4 +1,4 @@
-from gendiff.format_scripts.compare_data import compare_data
+from gendiff.format_scripts.compare_data import get_diff_str
 import argparse
 import sys
 
@@ -48,7 +48,7 @@ def generate_diff(file_path1, file_path2, format='stylish'):
         return 'Unsupported file format!'
     data1 = open(file_path1)
     data2 = open(file_path2)
-    return compare_data(data1, data2, format, data_type)
+    return get_diff_str(data1, data2, format, data_type)
 
 
 def main():

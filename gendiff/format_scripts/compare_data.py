@@ -8,7 +8,7 @@ def get_diff_for_key(dict1, dict2, key):
     """
     Сравнивает значения двух словарей
     dict1 и dict2 по ключу key, возвращает
-    список кортеж с результатом сравнения
+    кортеж с результатом сравнения
     """
     old_data = dict1.get(key, None)
     new_data = dict2.get(key, None)
@@ -38,11 +38,14 @@ def get_diff_list(dict1, dict2):
     return result
 
 
-def compare_dict(dict1, dict2, format):
+def get_diff_str(data1, data2, format, data_type):
     """
-    Возвращает строку с результатом сравнения двух словарей.
+    Возвращает текстовый результат сравнения данных
     """
-    diff_list = get_diff_list(dict1, dict2)
+    parsed_data1 = parse(data1, data_type)
+    parsed_data2 = parse(data2, data_type)
+
+    diff_list = get_diff_list(parsed_data1, parsed_data2)
     result = ''
     if format == 'stylish':
         result = get_stylish(diff_list)
@@ -51,12 +54,3 @@ def compare_dict(dict1, dict2, format):
     elif format == 'json':
         result = get_json(diff_list)
     return result
-
-
-def compare_data(data1, data2, format, data_type):
-    """
-    Возвращает текстовый результат сравнения данных
-    """
-    parsed_data1 = parse(data1, data_type)
-    parsed_data2 = parse(data2, data_type)
-    return compare_dict(parsed_data1, parsed_data2, format)
