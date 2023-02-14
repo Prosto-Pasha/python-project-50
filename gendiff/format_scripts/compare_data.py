@@ -1,7 +1,7 @@
 from gendiff.format_scripts.format_plain import get_plain
 from gendiff.format_scripts.format_stylish import get_stylish
 from gendiff.format_scripts.format_json import get_json
-from gendiff.format_scripts.parse_data import parse
+from gendiff.parse_data import parse
 
 
 def get_diff_for_key(dict1, dict2, key):
