@@ -71,25 +71,55 @@ def update_result_from_list(diff_l, indent, result):
             result.append(arg2_list_item)
 
 
+def format_sub_tree(diff_l, indent):
+    """
+    Обработка сложного листа
+    """
+    result = []
+    update_result_from_list(diff_l, indent, result)
+    result.append(f'{BLANK_STR * indent}}}')
+    result.insert(0, '{')
+    result = '\n'.join(result)
+    return result
+
+
+def format_complex_leaf(diff_l, indent):
+    """
+    Обработка вложенного дерева
+    """
+    result = []
+    for key, arg in diff_l.items():
+        start_str = BLANK_STR * (indent + 1)
+        arg_str = get_stylish(arg, indent + 1)
+        result.append(f'{start_str}{key}: {arg_str}')
+    result.append(f'{BLANK_STR * indent}}}')
+    result.insert(0, '{')
+    result = '\n'.join(result)
+    return result
+
+
+def format_leaf(diff_l, indent):
+    """
+    Обработка простого листа
+    """
+    return format_arg(diff_l)
+
+
 def get_stylish(diff_l, indent=0):
     """
     Возвращает строковое представление
     по списку различий двух словарей
     в формате stylish
     """
-    result = []
-    is_list = isinstance(diff_l, list)
-    is_dict = isinstance(diff_l, dict)
-    if not is_list and not is_dict:
-        return format_arg(diff_l)
-    result.append('{')
-    if is_dict:
-        for key, arg in diff_l.items():
-            start_str = BLANK_STR * (indent + 1)
-            arg_str = get_stylish(arg, indent + 1)
-            result.append(f'{start_str}{key}: {arg_str}')
-    if is_list:
-        update_result_from_list(diff_l, indent, result)
-    result.append(f'{BLANK_STR * indent}}}')
-    result = '\n'.join(result)
-    return result
+    FORMAT_FUNC = {
+        'format_sub_tree': format_sub_tree,
+        'format_complex_leaf': format_complex_leaf,
+        'format_leaf': format_leaf
+    }
+    if isinstance(diff_l, list):
+        func_name = 'format_sub_tree'
+    elif isinstance(diff_l, dict):
+        func_name = 'format_complex_leaf'
+    else:
+        func_name = 'format_leaf'
+    return FORMAT_FUNC[func_name](diff_l, indent)

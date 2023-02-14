@@ -56,22 +56,48 @@ def get_list_item(arg, path):
     return f"Property '{path}' {arg1_arg2_str}"
 
 
+def format_sub_tree(diff_l, path):
+    """
+    Обработка сложного листа
+    """
+    result = []
+    for arg in diff_l:
+        list_item = get_list_item(arg, path)
+        if list_item is not None:
+            result.append(list_item)
+    result = '\n'.join(result)
+    return result
+
+
+def format_complex_leaf(diff_l, path):
+    """
+    Обработка вложенного дерева
+    """
+    return '[complex value]'
+
+
+def format_leaf(diff_l, path):
+    """
+    Обработка простого листа
+    """
+    return str(diff_l)
+
+
 def get_plain(diff_l, path=''):
     """
     Возвращает строковое представление
     по списку различий двух словарей
     в формате plain
     """
-    result = []
-    is_list = isinstance(diff_l, list)
-    if isinstance(diff_l, dict):
-        return '[complex value]'
-    if not is_list:
-        return str(diff_l)
-    if is_list:
-        for arg in diff_l:
-            list_item = get_list_item(arg, path)
-            if list_item is not None:
-                result.append(list_item)
-    result = '\n'.join(result)
-    return result
+    FORMAT_FUNC = {
+        'format_sub_tree': format_sub_tree,
+        'format_complex_leaf': format_complex_leaf,
+        'format_leaf': format_leaf
+    }
+    if isinstance(diff_l, list):
+        func_name = 'format_sub_tree'
+    elif isinstance(diff_l, dict):
+        func_name = 'format_complex_leaf'
+    else:
+        func_name = 'format_leaf'
+    return FORMAT_FUNC[func_name](diff_l, path)
