@@ -34,16 +34,14 @@ def get_list_items(args, diff_type, indent_str, key_str):
     arg1_list_item = None
     arg2_list_item = None
     diff = DIFF_TYPE[diff_type]
-    start_str = f'{indent_str}{diff}{key_str}: '
-    if diff_type == 'unchanged' or diff_type == 'nested':
-        arg1_list_item = f'{start_str}{arg1_str}'
-    elif diff_type == 'added':
-        arg2_list_item = f'{start_str}{arg2_str}'
-    elif diff_type == 'removed':
-        arg1_list_item = f'{start_str}{arg1_str}'
-    elif diff_type == 'changed':
+    single_str = f'{indent_str}{diff}{key_str}: '
+    if diff_type == 'changed':
         arg1_list_item = f'{indent_str}  - {key_str}: {arg1_str}'
         arg2_list_item = f'{indent_str}  + {key_str}: {arg2_str}'
+    elif diff_type == 'added':
+        arg2_list_item = f'{single_str}{arg2_str}'
+    else:
+        arg1_list_item = f'{single_str}{arg1_str}'
     return arg1_list_item, arg2_list_item
 
 
