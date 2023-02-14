@@ -38,13 +38,23 @@ def get_diff_list(dict1, dict2):
     return result
 
 
-def get_diff_str(data1, data2, format, data_type):
+def get_diff_str(file_path1, file_path2, format):
     """
-    Возвращает текстовый результат сравнения данных
+    Возвращает текстовый результат сравнения данных,
+    в формате format, путь к файлам в
+    переменных file_path1, file_path2
     """
-    parsed_data1 = parse(data1, data_type)
-    parsed_data2 = parse(data2, data_type)
-
+    file1_ext = file_path1[-4:].upper()
+    file2_ext = file_path1[-4:].upper()
+    yaml_ext = ('.YML', 'YAML')
+    if file1_ext == 'JSON' and file2_ext == 'JSON':
+        data_type = 'JSON'
+    elif file1_ext in yaml_ext and file2_ext in yaml_ext:
+        data_type = 'YAML'
+    else:
+        return 'Unsupported file format!'
+    parsed_data1 = parse(open(file_path1), data_type)
+    parsed_data2 = parse(open(file_path2), data_type)
     diff_list = get_diff_list(parsed_data1, parsed_data2)
     result = ''
     if format == 'stylish':

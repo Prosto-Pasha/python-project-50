@@ -37,18 +37,7 @@ def generate_diff(file_path1, file_path2, format='stylish'):
     Получает пути к двум файлам,
     возвращает строку с результатом сравнения файлов
     """
-    file1_ext = file_path1[-4:].upper()
-    file2_ext = file_path1[-4:].upper()
-    yaml_ext = ('.YML', 'YAML')
-    if file1_ext == 'JSON' and file2_ext == 'JSON':
-        data_type = 'JSON'
-    elif file1_ext in yaml_ext and file2_ext in yaml_ext:
-        data_type = 'YAML'
-    else:
-        return 'Unsupported file format!'
-    data1 = open(file_path1)
-    data2 = open(file_path2)
-    return get_diff_str(data1, data2, format, data_type)
+    return get_diff_str(file_path1, file_path2, format)
 
 
 def main():
