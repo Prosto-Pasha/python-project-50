@@ -1,3 +1,5 @@
+from gendiff.format_scripts.format_common import format_arg
+
 
 def get_value_str(arg):
     """
@@ -7,8 +9,8 @@ def get_value_str(arg):
     """
     if isinstance(arg, dict):
         return '[complex value]'
-    if arg in ('true', 'false', 'null') or isinstance(arg, int):
-        return arg
+    if isinstance(arg, int) or isinstance(arg, bool) or arg is None:
+        return format_arg(arg)
     return f"'{arg}'"
 
 

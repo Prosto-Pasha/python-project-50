@@ -7,7 +7,7 @@
         "added",
         "follow",
         null,
-        "false"
+        false
       ],
       [
         "unchanged",
@@ -24,8 +24,8 @@
       [
         "changed",
         "setting3",
-        "true",
-        "null"
+        true,
+        null
       ],
       [
         "added",

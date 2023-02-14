@@ -2,7 +2,7 @@
   [
     "removed",
     "follow",
-    "false",
+    false,
     null
   ],
   [
@@ -27,6 +27,6 @@
     "added",
     "verbose",
     null,
-    "true"
+    true
   ]
 ]

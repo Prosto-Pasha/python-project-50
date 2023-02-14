@@ -1,3 +1,6 @@
+from gendiff.format_scripts.format_common import format_arg
+
+
 DIFF_TYPE = {
     'added': '  + ',
     'removed': '  - ',
@@ -16,15 +19,15 @@ def get_args_str(arg1, arg2, indent):
     с учетом отступа indent
     в формате  stylish
     """
-    arg1_str = None if arg1 is None else get_stylish(arg1, indent + 1)
-    arg2_str = None if arg2 is None else get_stylish(arg2, indent + 1)
+    arg1_str = get_stylish(arg1, indent + 1)
+    arg2_str = get_stylish(arg2, indent + 1)
     return arg1_str, arg2_str
 
 
 def get_list_items(args, diff_type, indent_str, key_str):
     """
     Возвращает элементы для списка различий
-    в формате  stylish
+    в формате stylish
     """
     arg1_str = args[0]
     arg2_str = args[1]
@@ -80,7 +83,7 @@ def get_stylish(diff_l, indent=0):
     is_list = isinstance(diff_l, list)
     is_dict = isinstance(diff_l, dict)
     if not is_list and not is_dict:
-        return str(diff_l)
+        return format_arg(diff_l)
     result.append('{')
     if is_dict:
         for key, arg in diff_l.items():
