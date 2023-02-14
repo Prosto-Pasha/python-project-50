@@ -4,6 +4,13 @@ from gendiff.format_scripts.format_json import get_json
 from gendiff.parse_data import parse
 
 
+GET_FORMAT = {
+    'stylish': get_stylish,
+    'plain': get_plain,
+    'json': get_json
+}
+
+
 def get_diff_for_key(dict1, dict2, key):
     """
     Сравнивает значения двух словарей
@@ -56,11 +63,4 @@ def get_diff_str(file_path1, file_path2, format):
     parsed_data1 = parse(open(file_path1), data_type)
     parsed_data2 = parse(open(file_path2), data_type)
     diff_list = get_diff_list(parsed_data1, parsed_data2)
-    result = ''
-    if format == 'stylish':
-        result = get_stylish(diff_list)
-    elif format == 'plain':
-        result = get_plain(diff_list)
-    elif format == 'json':
-        result = get_json(diff_list)
-    return result
+    return GET_FORMAT[format](diff_list)
