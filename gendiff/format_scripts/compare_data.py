@@ -2,6 +2,7 @@ from gendiff.format_scripts.format_plain import get_plain
 from gendiff.format_scripts.format_stylish import get_stylish
 from gendiff.format_scripts.format_json import get_json
 from gendiff.parse_data import parse
+from pathlib import Path
 
 
 GET_FORMAT = {
@@ -60,7 +61,9 @@ def get_diff_str(file_path1, file_path2, format):
         data_type = 'YAML'
     else:
         return 'Unsupported file format!'
-    parsed_data1 = parse(open(file_path1), data_type)
-    parsed_data2 = parse(open(file_path2), data_type)
+    with Path(file_path1).open() as file1:
+        parsed_data1 = parse(file1, data_type)
+    with Path(file_path2).open() as file2:
+        parsed_data2 = parse(file2, data_type)
     diff_list = get_diff_list(parsed_data1, parsed_data2)
     return GET_FORMAT[format](diff_list)
