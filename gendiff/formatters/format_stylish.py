@@ -1,4 +1,4 @@
-from gendiff.format_scripts.format_common import format_arg
+from gendiff.formatters.format_common import format_arg
 
 
 DIFF_TYPE = {
