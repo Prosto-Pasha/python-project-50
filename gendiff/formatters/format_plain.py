@@ -1,103 +1,86 @@
 from gendiff.formatters.format_common import format_arg
 
 
-def get_value_str(arg):
+def get_plain(diff_l, path=''):
     """
-    Возвращает текстовое представление
-    значения аргумента arg
-    в формате plain
+    Возвращает строковое представление по списку
+    различий двух словарей в формате plain
     """
-    if isinstance(arg, dict):
-        return '[complex value]'
-    if isinstance(arg, int) or isinstance(arg, bool) or arg is None:
-        return format_arg(arg)
-    return f"'{arg}'"
-
-
-def get_arg1_arg2_str(diff_type, arg1, arg2):
-    """
-    Возвращает строку по типу различия
-    для двух аргументов
-    в формате plain
-    """
-    result = ''
-    if diff_type == 'added':
-        middle_text = 'was added with value:'
-        value_str = get_value_str(arg2)
-        result = f'{middle_text} {value_str}'
-    elif diff_type == 'removed':
-        result = 'was removed'
-    else:  # diff_type == 'changed':
-        middle_text = 'was updated. From'
-        value_str_arg1 = get_value_str(arg1)
-        value_str_arg2 = get_value_str(arg2)
-        result = f'{middle_text} {value_str_arg1} to {value_str_arg2}'
-    return result
-
-
-def get_list_item(arg, path):
-    """
-    Возвращает строковое представление одного отличия
-    в формате plain
-    """
-    diff_type = arg[0]
-    current_path = arg[1]
-    arg1 = arg[2]
-    arg2 = arg[3]
-    if path:
-        path = f'{path}.{current_path}'
-    else:
-        path = current_path
-    if diff_type == 'nested':
-        return get_plain(arg1, path)
-    elif diff_type == 'unchanged':
-        return None
-    arg1_arg2_str = get_arg1_arg2_str(diff_type, arg1, arg2)
-    return f"Property '{path}' {arg1_arg2_str}"
-
-
-def format_sub_tree(diff_l, path):
-    """
-    Обработка сложного листа
-    """
+    vertex_func = {
+        'unchanged': format_unchanged,
+        'added': format_added,
+        'removed': format_removed,
+        'nested': format_nested,
+        'changed': format_changed}
     result = []
     for arg in diff_l:
-        list_item = get_list_item(arg, path)
+        func = vertex_func[arg[0]]
+        list_item = func(arg, path)
         if list_item is not None:
             result.append(list_item)
     result = '\n'.join(result)
     return result
 
 
-def format_complex_leaf(diff_l, path):
+def get_path(path, branch):
     """
-    Обработка вложенного дерева
+    Возвращает полный путь текущего значения
     """
-    return '[complex value]'
+    return f'{path}.{branch}' if path else branch
 
 
-def format_leaf(diff_l, path):
+def format_unchanged(arg, path):
     """
-    Обработка простого листа
+    Формат вершины типа 'unchanged'
     """
-    return str(diff_l)
+    return None
 
 
-def get_plain(diff_l, path=''):
+def format_added(arg, path):
     """
-    Возвращает строковое представление
-    по списку различий двух словарей
-    в формате plain
+    Формат вершины типа 'added'
     """
-    FORMAT_FUNC = {
-        'format_sub_tree': format_sub_tree,
-        'format_complex_leaf': format_complex_leaf,
-        'format_leaf': format_leaf
-    }
-    if isinstance(diff_l, list):
-        func_name = 'format_sub_tree'
-    elif isinstance(diff_l, dict):
-        func_name = 'format_complex_leaf'
-    else:
-        func_name = 'format_leaf'
-    return FORMAT_FUNC[func_name](diff_l, path)
+    value_str = get_value_str(arg[3])
+    path = get_path(path, arg[1])
+    middle_text = 'was added with value:'
+    return f"Property '{path}' {middle_text} {value_str}"
+
+
+def format_removed(arg, path):
+    """
+    Формат вершины типа 'removed'
+    """
+    path = get_path(path, arg[1])
+    return f"Property '{path}' was removed"
+
+
+def format_nested(arg, path):
+    """
+    Формат вершины типа 'nested'
+    """
+    path = get_path(path, arg[1])
+    return get_plain(arg[2], path)
+
+
+def format_changed(arg, path):
+    """
+    Формат вершины типа 'changed'
+    """
+    path = get_path(path, arg[1])
+    middle_text = 'was updated. From'
+    value_str_arg1 = get_value_str(arg[2])
+    value_str_arg2 = get_value_str(arg[3])
+    arg1_arg2_str = f'{middle_text} {value_str_arg1} to {value_str_arg2}'
+    return f"Property '{path}' {arg1_arg2_str}"
+
+
+def get_value_str(arg):
+    """
+    Возвращает текстовое представление значения
+    аргумента arg в формате plain
+    """
+    if isinstance(arg, dict):
+        return '[complex value]'
+    if isinstance(arg, int) or isinstance(arg, bool) or arg is None:
+        return format_arg(arg)
+    return f"'{arg}'"
