@@ -67,3 +67,11 @@ def get_diff_str(file_path1, file_path2, format):
         parsed_data2 = parse(file2, data_type)
     diff_list = get_diff_list(parsed_data1, parsed_data2)
     return GET_FORMAT[format](diff_list)
+
+
+def generate_diff(file_path1, file_path2, format='stylish'):
+    """
+    Получает пути к двум файлам,
+    возвращает строку с результатом сравнения файлов
+    """
+    return get_diff_str(file_path1, file_path2, format)

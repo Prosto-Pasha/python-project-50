@@ -1,4 +1,4 @@
-from gendiff.format_scripts.compare_data import get_diff_str
+from gendiff.gendiff_logic import generate_diff
 import argparse
 import sys
 
@@ -30,14 +30,6 @@ def parseargs(args):
         choices=['stylish', 'plain', 'json']
     )
     return parser.parse_args(args)
-
-
-def generate_diff(file_path1, file_path2, format='stylish'):
-    """
-    Получает пути к двум файлам,
-    возвращает строку с результатом сравнения файлов
-    """
-    return get_diff_str(file_path1, file_path2, format)
 
 
 def main():
