@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from gendiff.scripts.main_script import generate_diff, parseargs
+from gendiff.gendiff_logic import generate_diff, parseargs
 
 
 def get_data_from_file(file_name):

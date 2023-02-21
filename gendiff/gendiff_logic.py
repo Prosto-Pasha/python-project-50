@@ -3,6 +3,7 @@ from gendiff.format_scripts.format_stylish import get_stylish
 from gendiff.format_scripts.format_json import get_json
 from gendiff.parse_data import parse
 from pathlib import Path
+import argparse
 
 
 GET_FORMAT = {
@@ -10,6 +11,26 @@ GET_FORMAT = {
     'plain': get_plain,
     'json': get_json
 }
+
+
+def parseargs(args):
+    """
+    Возвращает аргументы, указанные при запуске
+    """
+    parser = argparse.ArgumentParser(
+        description="Compares two configuration files and shows a difference."
+    )
+    parser.add_argument("first_file", type=str)
+    parser.add_argument("second_file", type=str)
+    # 'plain' or 'json'
+    parser.add_argument(
+        "-f", "--format",
+        help="set format of output",
+        type=str,
+        default='stylish',
+        choices=['stylish', 'plain', 'json']
+    )
+    return parser.parse_args(args)
 
 
 def get_diff_for_key(dict1, dict2, key):
