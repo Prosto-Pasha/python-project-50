@@ -76,8 +76,9 @@ def test_unsupported_files():
     с неподдерживаемыми файлами
     формат по умолчанию
     """
-    result = generate_diff('some_file1.txt', 'some_file2.txt')
-    assert result == 'Unsupported file format!'
+    with pytest.raises(Exception) as e:
+        result = generate_diff('some_file1.txt', 'some_file2.txt')
+    assert str(e.value) == 'Unsupported file format!'
 
 
 def test_parser():

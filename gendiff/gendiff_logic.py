@@ -34,21 +34,30 @@ def parseargs(args):
     return parser.parse_args(args)
 
 
-def generate_diff(file_path1, file_path2, format='stylish'):
+def get_data_type(file_path1, file_path2):
     """
-    Возвращает текстовый результат сравнения данных,
-    в формате format, путь к файлам в
-    переменных file_path1, file_path2
+    Возвращает строку с типом данных,
+    определённым по расширению файлов
     """
     file1_ext = file_path1[-4:].upper()
-    file2_ext = file_path1[-4:].upper()
+    file2_ext = file_path2[-4:].upper()
     yaml_ext = ('.YML', 'YAML')
     if file1_ext == 'JSON' and file2_ext == 'JSON':
         data_type = 'JSON'
     elif file1_ext in yaml_ext and file2_ext in yaml_ext:
         data_type = 'YAML'
     else:
-        return 'Unsupported file format!'
+        raise Exception('Unsupported file format!')
+    return data_type
+
+
+def generate_diff(file_path1, file_path2, format='stylish'):
+    """
+    Возвращает текстовый результат сравнения данных,
+    в формате format, путь к файлам в
+    переменных file_path1, file_path2
+    """
+    data_type = get_data_type(file_path1, file_path2)
     with Path(file_path1).open() as file1:
         parsed_data1 = parse(file1, data_type)
     with Path(file_path2).open() as file2:
