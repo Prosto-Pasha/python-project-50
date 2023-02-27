@@ -21,7 +21,7 @@ def get_stylish(diff, indent=0):
     по списку различий двух словарей
     в формате stylish
     """
-    vertex_func = {
+    format_vertex_vars = {
         'unchanged': format_unchanged,
         'added': format_added,
         'removed': format_removed,
@@ -29,7 +29,7 @@ def get_stylish(diff, indent=0):
         'changed': format_changed}
     result = []
     for arg in diff:
-        func = vertex_func[arg[TYPE]]
+        func = format_vertex_vars[arg[TYPE]]
         func(arg, indent, result)
     result.append(f'{BLANK_STR * indent}}}')
     result.insert(0, '{')

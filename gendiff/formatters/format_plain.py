@@ -12,7 +12,7 @@ def get_plain(diff, path=''):
     Возвращает строковое представление по списку
     различий двух словарей в формате plain
     """
-    vertex_func = {
+    format_vertex_vars = {
         'unchanged': format_unchanged,
         'added': format_added,
         'removed': format_removed,
@@ -20,7 +20,7 @@ def get_plain(diff, path=''):
         'changed': format_changed}
     result = []
     for arg in diff:
-        func = vertex_func[arg[TYPE]]
+        func = format_vertex_vars[arg[TYPE]]
         list_item = func(arg, path)
         if list_item is not None:
             result.append(list_item)
