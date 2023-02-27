@@ -15,7 +15,7 @@ OLD_VALUE = 2
 NEW_VALUE = 3
 
 
-def get_stylish(diff_l, indent=0):
+def get_stylish(diff, indent=0):
     """
     Возвращает строковое представление
     по списку различий двух словарей
@@ -28,7 +28,7 @@ def get_stylish(diff_l, indent=0):
         'nested': format_nested,
         'changed': format_changed}
     result = []
-    for arg in diff_l:
+    for arg in diff:
         func = vertex_func[arg[TYPE]]
         func(arg, indent, result)
     result.append(f'{BLANK_STR * indent}}}')

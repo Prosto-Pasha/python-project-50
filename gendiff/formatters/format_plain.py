@@ -7,7 +7,7 @@ OLD_VALUE = 2
 NEW_VALUE = 3
 
 
-def get_plain(diff_l, path=''):
+def get_plain(diff, path=''):
     """
     Возвращает строковое представление по списку
     различий двух словарей в формате plain
@@ -19,7 +19,7 @@ def get_plain(diff_l, path=''):
         'nested': format_nested,
         'changed': format_changed}
     result = []
-    for arg in diff_l:
+    for arg in diff:
         func = vertex_func[arg[TYPE]]
         list_item = func(arg, path)
         if list_item is not None:
