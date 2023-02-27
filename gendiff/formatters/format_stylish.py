@@ -9,6 +9,10 @@ DIFF_TYPE = {
     'changed': ' -+ ',
 }
 BLANK_STR = '    '
+TYPE = 0
+KEY = 1
+OLD_VALUE = 2
+NEW_VALUE = 3
 
 
 def get_stylish(diff_l, indent=0):
@@ -25,7 +29,7 @@ def get_stylish(diff_l, indent=0):
         'changed': format_changed}
     result = []
     for arg in diff_l:
-        func = vertex_func[arg[0]]
+        func = vertex_func[arg[TYPE]]
         func(arg, indent, result)
     result.append(f'{BLANK_STR * indent}}}')
     result.insert(0, '{')
@@ -37,8 +41,8 @@ def format_unchanged(arg, indent, result):
     """
     Формат вершины типа 'unchanged'
     """
-    arg_str = format_arg(arg[2])
-    elem = f'{BLANK_STR * indent}{DIFF_TYPE[arg[0]]}{arg[1]}: {arg_str}'
+    arg_str = format_arg(arg[OLD_VALUE])
+    elem = f'{BLANK_STR * indent}{DIFF_TYPE[arg[TYPE]]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
@@ -46,12 +50,12 @@ def format_added(arg, indent, result):
     """
     Формат вершины типа 'added'
     """
-    arg_str = arg[3]
+    arg_str = arg[NEW_VALUE]
     if isinstance(arg_str, dict):
         arg_str = format_complex_leaf(arg_str, indent + 1)
     else:
-        arg_str = format_arg(arg[3])
-    elem = f'{BLANK_STR * indent}{DIFF_TYPE["added"]}{arg[1]}: {arg_str}'
+        arg_str = format_arg(arg[NEW_VALUE])
+    elem = f'{BLANK_STR * indent}{DIFF_TYPE["added"]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
@@ -59,12 +63,12 @@ def format_removed(arg, indent, result):
     """
     Формат вершины типа 'removed'
     """
-    arg_str = arg[2]
+    arg_str = arg[OLD_VALUE]
     if isinstance(arg_str, dict):
         arg_str = format_complex_leaf(arg_str, indent + 1)
     else:
         arg_str = format_arg(arg_str)
-    elem = f'{BLANK_STR * indent}{DIFF_TYPE["removed"]}{arg[1]}: {arg_str}'
+    elem = f'{BLANK_STR * indent}{DIFF_TYPE["removed"]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
@@ -80,8 +84,8 @@ def format_nested(arg, indent, result):
     """
     Формат вершины типа 'nested'
     """
-    arg_str = get_stylish(arg[2], indent + 1)
-    elem = f'{BLANK_STR * indent}{DIFF_TYPE[arg[0]]}{arg[1]}: {arg_str}'
+    arg_str = get_stylish(arg[OLD_VALUE], indent + 1)
+    elem = f'{BLANK_STR * indent}{DIFF_TYPE[arg[TYPE]]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
