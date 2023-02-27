@@ -46,10 +46,8 @@ def format_added(arg, path):
     """
     Формат вершины типа 'added'
     """
-    value_str = get_value_str(arg[NEW_VALUE])
-    path = get_path(path, arg[KEY])
-    middle_text = 'was added with value:'
-    return f"Property '{path}' {middle_text} {value_str}"
+    return (f"Property '{get_path(path, arg[KEY])}' "
+            f"was added with value: {get_value_str(arg[NEW_VALUE])}")
 
 
 def format_removed(arg, path):
@@ -64,20 +62,16 @@ def format_nested(arg, path):
     """
     Формат вершины типа 'nested'
     """
-    path = get_path(path, arg[KEY])
-    return get_plain(arg[OLD_VALUE], path)
+    return get_plain(arg[OLD_VALUE], get_path(path, arg[KEY]))
 
 
 def format_changed(arg, path):
     """
     Формат вершины типа 'changed'
     """
-    path = get_path(path, arg[KEY])
-    middle_text = 'was updated. From'
-    value_str_arg1 = get_value_str(arg[OLD_VALUE])
-    value_str_arg2 = get_value_str(arg[NEW_VALUE])
-    arg1_arg2_str = f'{middle_text} {value_str_arg1} to {value_str_arg2}'
-    return f"Property '{path}' {arg1_arg2_str}"
+    return (f"Property '{get_path(path, arg[KEY])}' "
+            f"was updated. From {get_value_str(arg[OLD_VALUE])} "
+            f"to {get_value_str(arg[NEW_VALUE])}")
 
 
 def get_value_str(arg):
