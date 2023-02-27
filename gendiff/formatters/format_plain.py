@@ -47,7 +47,7 @@ def format_added(arg, path):
     Формат вершины типа 'added'
     """
     return (f"Property '{get_path(path, arg[KEY])}' "
-            f"was added with value: {get_value_str(arg[NEW_VALUE])}")
+            f"was added with value: {stringify_value(arg[NEW_VALUE])}")
 
 
 def format_removed(arg, path):
@@ -70,11 +70,11 @@ def format_changed(arg, path):
     Формат вершины типа 'changed'
     """
     return (f"Property '{get_path(path, arg[KEY])}' "
-            f"was updated. From {get_value_str(arg[OLD_VALUE])} "
-            f"to {get_value_str(arg[NEW_VALUE])}")
+            f"was updated. From {stringify_value(arg[OLD_VALUE])} "
+            f"to {stringify_value(arg[NEW_VALUE])}")
 
 
-def get_value_str(arg):
+def stringify_value(arg):
     """
     Возвращает текстовое представление значения
     аргумента arg в формате plain
