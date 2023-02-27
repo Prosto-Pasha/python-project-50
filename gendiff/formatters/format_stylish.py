@@ -1,7 +1,7 @@
 from gendiff.formatters.format_common import format_arg
 
 
-DIFF_TYPE = {
+DIFF_TO_STR = {
     'added': '  + ',
     'removed': '  - ',
     'unchanged': '    ',
@@ -42,7 +42,7 @@ def format_unchanged(arg, depth, result):
     Формат вершины типа 'unchanged'
     """
     arg_str = format_arg(arg[OLD_VALUE])
-    elem = f'{BLANK_STR * depth}{DIFF_TYPE[arg[TYPE]]}{arg[KEY]}: {arg_str}'
+    elem = f'{BLANK_STR * depth}{DIFF_TO_STR[arg[TYPE]]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
@@ -55,7 +55,7 @@ def format_added(arg, depth, result):
         arg_str = format_complex_leaf(arg_str, depth + 1)
     else:
         arg_str = format_arg(arg[NEW_VALUE])
-    elem = f'{BLANK_STR * depth}{DIFF_TYPE["added"]}{arg[KEY]}: {arg_str}'
+    elem = f'{BLANK_STR * depth}{DIFF_TO_STR["added"]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
@@ -68,7 +68,7 @@ def format_removed(arg, depth, result):
         arg_str = format_complex_leaf(arg_str, depth + 1)
     else:
         arg_str = format_arg(arg_str)
-    elem = f'{BLANK_STR * depth}{DIFF_TYPE["removed"]}{arg[KEY]}: {arg_str}'
+    elem = f'{BLANK_STR * depth}{DIFF_TO_STR["removed"]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
@@ -85,7 +85,7 @@ def format_nested(arg, depth, result):
     Формат вершины типа 'nested'
     """
     arg_str = get_stylish(arg[OLD_VALUE], depth + 1)
-    elem = f'{BLANK_STR * depth}{DIFF_TYPE[arg[TYPE]]}{arg[KEY]}: {arg_str}'
+    elem = f'{BLANK_STR * depth}{DIFF_TO_STR[arg[TYPE]]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
