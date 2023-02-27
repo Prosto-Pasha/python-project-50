@@ -28,9 +28,9 @@ def get_stylish(diff, indent=0):
         'nested': format_nested,
         'changed': format_changed}
     result = []
-    for arg in diff:
-        func = format_vertex_vars[arg[TYPE]]
-        func(arg, indent, result)
+    for vertex in diff:
+        format_vertex = format_vertex_vars[vertex[TYPE]]
+        format_vertex(vertex, indent, result)
     result.append(f'{BLANK_STR * indent}}}')
     result.insert(0, '{')
     result = '\n'.join(result)

@@ -19,11 +19,11 @@ def get_plain(diff, path=''):
         'nested': format_nested,
         'changed': format_changed}
     result = []
-    for arg in diff:
-        func = format_vertex_vars[arg[TYPE]]
-        list_item = func(arg, path)
-        if list_item is not None:
-            result.append(list_item)
+    for vertex in diff:
+        format_vertex = format_vertex_vars[vertex[TYPE]]
+        formatted_vertex = format_vertex(vertex, path)
+        if formatted_vertex is not None:
+            result.append(formatted_vertex)
     result = '\n'.join(result)
     return result
 
