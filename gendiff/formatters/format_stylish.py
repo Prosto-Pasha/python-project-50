@@ -15,7 +15,7 @@ OLD_VALUE = 2
 NEW_VALUE = 3
 
 
-def get_stylish(diff, indent=0):
+def get_stylish(diff, depth=0):
     """
     Возвращает строковое представление
     по списку различий двух словарей
@@ -30,66 +30,66 @@ def get_stylish(diff, indent=0):
     result = []
     for vertex in diff:
         format_vertex = format_vertex_vars[vertex[TYPE]]
-        format_vertex(vertex, indent, result)
-    result.append(f'{BLANK_STR * indent}}}')
+        format_vertex(vertex, depth, result)
+    result.append(f'{BLANK_STR * depth}}}')
     result.insert(0, '{')
     result = '\n'.join(result)
     return result
 
 
-def format_unchanged(arg, indent, result):
+def format_unchanged(arg, depth, result):
     """
     Формат вершины типа 'unchanged'
     """
     arg_str = format_arg(arg[OLD_VALUE])
-    elem = f'{BLANK_STR * indent}{DIFF_TYPE[arg[TYPE]]}{arg[KEY]}: {arg_str}'
+    elem = f'{BLANK_STR * depth}{DIFF_TYPE[arg[TYPE]]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
-def format_added(arg, indent, result):
+def format_added(arg, depth, result):
     """
     Формат вершины типа 'added'
     """
     arg_str = arg[NEW_VALUE]
     if isinstance(arg_str, dict):
-        arg_str = format_complex_leaf(arg_str, indent + 1)
+        arg_str = format_complex_leaf(arg_str, depth + 1)
     else:
         arg_str = format_arg(arg[NEW_VALUE])
-    elem = f'{BLANK_STR * indent}{DIFF_TYPE["added"]}{arg[KEY]}: {arg_str}'
+    elem = f'{BLANK_STR * depth}{DIFF_TYPE["added"]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
-def format_removed(arg, indent, result):
+def format_removed(arg, depth, result):
     """
     Формат вершины типа 'removed'
     """
     arg_str = arg[OLD_VALUE]
     if isinstance(arg_str, dict):
-        arg_str = format_complex_leaf(arg_str, indent + 1)
+        arg_str = format_complex_leaf(arg_str, depth + 1)
     else:
         arg_str = format_arg(arg_str)
-    elem = f'{BLANK_STR * indent}{DIFF_TYPE["removed"]}{arg[KEY]}: {arg_str}'
+    elem = f'{BLANK_STR * depth}{DIFF_TYPE["removed"]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
-def format_changed(arg, indent, result):
+def format_changed(arg, depth, result):
     """
     Формат вершины типа 'changed'
     """
-    format_removed(arg, indent, result)
-    format_added(arg, indent, result)
+    format_removed(arg, depth, result)
+    format_added(arg, depth, result)
 
 
-def format_nested(arg, indent, result):
+def format_nested(arg, depth, result):
     """
     Формат вершины типа 'nested'
     """
-    arg_str = get_stylish(arg[OLD_VALUE], indent + 1)
-    elem = f'{BLANK_STR * indent}{DIFF_TYPE[arg[TYPE]]}{arg[KEY]}: {arg_str}'
+    arg_str = get_stylish(arg[OLD_VALUE], depth + 1)
+    elem = f'{BLANK_STR * depth}{DIFF_TYPE[arg[TYPE]]}{arg[KEY]}: {arg_str}'
     result.append(elem)
 
 
-def format_complex_leaf(arg_dict, indent):
+def format_complex_leaf(arg_dict, depth):
     """
     Обработка вложенного дерева
     """
@@ -97,10 +97,10 @@ def format_complex_leaf(arg_dict, indent):
         return format_arg(arg_dict)
     result = []
     for key, arg in arg_dict.items():
-        start_str = BLANK_STR * (indent + 1)
-        arg_str = format_complex_leaf(arg, indent + 1)
+        start_str = BLANK_STR * (depth + 1)
+        arg_str = format_complex_leaf(arg, depth + 1)
         result.append(f'{start_str}{key}: {arg_str}')
-    result.append(f'{BLANK_STR * indent}}}')
+    result.append(f'{BLANK_STR * depth}}}')
     result.insert(0, '{')
     result = '\n'.join(result)
     return result
