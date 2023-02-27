@@ -66,14 +66,14 @@ def format_removed(vertex, depth):
             f'{stringify_value(vertex[OLD_VALUE], depth)}')
 
 
-def format_changed(arg, depth):
+def format_changed(vertex, depth):
     """
     Формат вершины типа 'changed'
     """
     return '\n'.join(
         [
-            format_removed(arg, depth),
-            format_added(arg, depth)
+            format_removed(vertex, depth),
+            format_added(vertex, depth)
         ]
     )
 
@@ -95,10 +95,10 @@ def format_complex_leaf(vertex, depth):
     if not isinstance(vertex, dict):
         return format_arg(vertex)
     result = []
-    for key, arg in vertex.items():
+    for key, value in vertex.items():
         vertex_to_str = (f'{BLANK_STR * (depth + 1)}'
                          f'{key}: '
-                         f'{format_complex_leaf(arg, depth + 1)}')
+                         f'{format_complex_leaf(value, depth + 1)}')
         result.append(vertex_to_str)
     result = ['{'] + result + [f'{BLANK_STR * depth}}}']
     return '\n'.join(result)
