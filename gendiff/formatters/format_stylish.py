@@ -30,25 +30,23 @@ def get_stylish(diff, depth=0):
     result = []
     for vertex in diff:
         format_vertex = format_vertex_vars[vertex[TYPE]]
-        format_vertex(vertex, depth, result)
-    result.append(f'{BLANK_STR * depth}}}')
-    result.insert(0, '{')
-    result = '\n'.join(result)
-    return result
+        formatted_vertex = format_vertex(vertex, depth)
+        result.append(formatted_vertex)
+    result = ['{'] + result + [f'{BLANK_STR * depth}}}']
+    return '\n'.join(result)
 
 
-def format_unchanged(vertex, depth, result):
+def format_unchanged(vertex, depth):
     """
     Формат вершины типа 'unchanged'
     """
-    vertex_to_str = (f'{BLANK_STR * depth}'
-                     f'{DIFF_TO_STR[vertex[TYPE]]}'
-                     f'{vertex[KEY]}: '
-                     f'{format_arg(vertex[OLD_VALUE])}')
-    result.append(vertex_to_str)
+    return (f'{BLANK_STR * depth}'
+            f'{DIFF_TO_STR[vertex[TYPE]]}'
+            f'{vertex[KEY]}: '
+            f'{format_arg(vertex[OLD_VALUE])}')
 
 
-def format_added(vertex, depth, result):
+def format_added(vertex, depth):
     """
     Формат вершины типа 'added'
     """
@@ -59,14 +57,13 @@ def format_added(vertex, depth, result):
         )
     else:
         value_to_str = format_arg(vertex[NEW_VALUE])
-    vertex_to_str = (f'{BLANK_STR * depth}'
-                     f'{DIFF_TO_STR["added"]}'
-                     f'{vertex[KEY]}: '
-                     f'{value_to_str}')
-    result.append(vertex_to_str)
+    return (f'{BLANK_STR * depth}'
+            f'{DIFF_TO_STR["added"]}'
+            f'{vertex[KEY]}: '
+            f'{value_to_str}')
 
 
-def format_removed(vertex, depth, result):
+def format_removed(vertex, depth):
     """
     Формат вершины типа 'removed'
     """
@@ -77,22 +74,25 @@ def format_removed(vertex, depth, result):
         )
     else:
         value_to_str = format_arg(vertex[OLD_VALUE])
-    vertex_to_str = (f'{BLANK_STR * depth}'
-                     f'{DIFF_TO_STR["removed"]}'
-                     f'{vertex[KEY]}: '
-                     f'{value_to_str}')
-    result.append(vertex_to_str)
+    return (f'{BLANK_STR * depth}'
+            f'{DIFF_TO_STR["removed"]}'
+            f'{vertex[KEY]}: '
+            f'{value_to_str}')
 
 
-def format_changed(arg, depth, result):
+def format_changed(arg, depth):
     """
     Формат вершины типа 'changed'
     """
-    format_removed(arg, depth, result)
-    format_added(arg, depth, result)
+    return '\n'.join(
+        [
+            format_removed(arg, depth),
+            format_added(arg, depth)
+        ]
+    )
 
 
-def format_nested(vertex, depth, result):
+def format_nested(vertex, depth):
     """
     Формат вершины типа 'nested'
     """
@@ -100,11 +100,10 @@ def format_nested(vertex, depth, result):
         vertex[OLD_VALUE],
         depth + 1
     )
-    vertex_to_str = (f'{BLANK_STR * depth}'
-                     f'{DIFF_TO_STR[vertex[TYPE]]}'
-                     f'{vertex[KEY]}: '
-                     f'{value_to_str}')
-    result.append(vertex_to_str)
+    return (f'{BLANK_STR * depth}'
+            f'{DIFF_TO_STR[vertex[TYPE]]}'
+            f'{vertex[KEY]}: '
+            f'{value_to_str}')
 
 
 def format_complex_leaf(vertex, depth):
@@ -119,7 +118,5 @@ def format_complex_leaf(vertex, depth):
                          f'{key}: '
                          f'{format_complex_leaf(arg, depth + 1)}')
         result.append(vertex_to_str)
-    result.append(f'{BLANK_STR * depth}}}')
-    result.insert(0, '{')
-    result = '\n'.join(result)
-    return result
+    result = ['{'] + result + [f'{BLANK_STR * depth}}}']
+    return '\n'.join(result)
