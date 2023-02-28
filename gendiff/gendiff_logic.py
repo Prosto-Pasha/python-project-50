@@ -3,7 +3,6 @@ from gendiff.formatters.format_stylish import get_stylish
 from gendiff.formatters.format_json import get_json
 from gendiff.parse_data import parse
 from gendiff.compare_data import get_diff_list
-from pathlib import Path
 import argparse
 
 
@@ -51,16 +50,6 @@ def get_data_type(file_path1, file_path2):
     return data_type
 
 
-def get_data(file_path, data_type):
-    """
-    Возвращает данные из файла.
-    file_path - путь к файлу
-    data_type - тип данных
-    """
-    with Path(file_path).open() as file:
-        return parse(file, data_type)
-
-
 def generate_diff(file_path1, file_path2, format='stylish'):
     """
     Возвращает текстовый результат сравнения данных,
@@ -68,7 +57,7 @@ def generate_diff(file_path1, file_path2, format='stylish'):
     переменных file_path1, file_path2
     """
     data_type = get_data_type(file_path1, file_path2)
-    parsed_data1 = get_data(file_path1, data_type)
-    parsed_data2 = get_data(file_path2, data_type)
+    parsed_data1 = parse(file_path1, data_type)
+    parsed_data2 = parse(file_path2, data_type)
     diff_list = get_diff_list(parsed_data1, parsed_data2)
     return GET_FORMAT[format](diff_list)

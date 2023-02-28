@@ -1,15 +1,18 @@
 import json
 import yaml
+from pathlib import Path
 
 
-def parse(data, data_type):
+def parse(file_path, data_type):
     """
-    Возвращает преобразованные данные
-    (словарь) для указанного формата
+    Возвращает данные из файла.
+    file_path - путь к файлу
+    data_type - тип данных
     """
-    if data_type == 'JSON':
-        return json.load(data)
-    elif data_type == 'YAML':
-        return yaml.safe_load(data)
-    else:
-        raise Exception('Unsupported file format!')
+    with Path(file_path).open() as file:
+        if data_type == 'JSON':
+            return json.load(file)
+        elif data_type == 'YAML':
+            return yaml.safe_load(file)
+        else:
+            raise Exception('Unsupported file format!')
