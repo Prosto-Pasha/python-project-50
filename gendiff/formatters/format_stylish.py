@@ -98,8 +98,8 @@ def stringify_value(value, depth):
         result = []
         for key, sub_value in value.items():
             value_to_str = (f'{BLANK_STR * (depth + 1)}'
-                             f'{key}: '
-                             f'{stringify_value(sub_value, depth)}')
+                            f'{key}: '
+                            f'{stringify_value(sub_value, depth)}')
             result.append(value_to_str)
         result = ['{'] + result + [f'{BLANK_STR * depth}}}']
         return '\n'.join(result)
