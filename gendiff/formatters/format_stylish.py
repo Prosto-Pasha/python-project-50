@@ -88,30 +88,19 @@ def format_nested(vertex, depth):
             f'{get_stylish(vertex[OLD_VALUE], depth + 1)}')
 
 
-def format_complex_leaf(vertex, depth):
-    """
-    Обработка вложенного дерева
-    """
-    if not isinstance(vertex, dict):
-        return format_arg(vertex)
-    result = []
-    for key, value in vertex.items():
-        vertex_to_str = (f'{BLANK_STR * (depth + 1)}'
-                         f'{key}: '
-                         f'{format_complex_leaf(value, depth + 1)}')
-        result.append(vertex_to_str)
-    result = ['{'] + result + [f'{BLANK_STR * depth}}}']
-    return '\n'.join(result)
-
-
 def stringify_value(vertex, depth):
     """
     Возвращает текстовое представление значения
     аргумента vertex в формате plain
     """
     if isinstance(vertex, dict):
-        return format_complex_leaf(
-            vertex,
-            depth + 1
-        )
+        depth += 1
+        result = []
+        for key, value in vertex.items():
+            vertex_to_str = (f'{BLANK_STR * (depth + 1)}'
+                             f'{key}: '
+                             f'{stringify_value(value, depth)}')
+            result.append(vertex_to_str)
+        result = ['{'] + result + [f'{BLANK_STR * depth}}}']
+        return '\n'.join(result)
     return format_arg(vertex)
