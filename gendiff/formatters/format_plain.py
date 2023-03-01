@@ -35,43 +35,43 @@ def get_path(path, branch):
     return f'{path}.{branch}' if path else branch
 
 
-def format_unchanged(arg, path):
+def format_unchanged(vertex, path):
     """
     Формат вершины типа 'unchanged'
     """
     return None
 
 
-def format_added(arg, path):
+def format_added(vertex, path):
     """
     Формат вершины типа 'added'
     """
-    return (f"Property '{get_path(path, arg[KEY])}' "
-            f"was added with value: {stringify_value(arg[NEW_VALUE])}")
+    return (f"Property '{get_path(path, vertex[KEY])}' "
+            f"was added with value: {stringify_value(vertex[NEW_VALUE])}")
 
 
-def format_removed(arg, path):
+def format_removed(vertex, path):
     """
     Формат вершины типа 'removed'
     """
-    path = get_path(path, arg[KEY])
+    path = get_path(path, vertex[KEY])
     return f"Property '{path}' was removed"
 
 
-def format_nested(arg, path):
+def format_nested(vertex, path):
     """
     Формат вершины типа 'nested'
     """
-    return get_plain(arg[OLD_VALUE], get_path(path, arg[KEY]))
+    return get_plain(vertex[OLD_VALUE], get_path(path, vertex[KEY]))
 
 
-def format_changed(arg, path):
+def format_changed(vertex, path):
     """
     Формат вершины типа 'changed'
     """
-    return (f"Property '{get_path(path, arg[KEY])}' "
-            f"was updated. From {stringify_value(arg[OLD_VALUE])} "
-            f"to {stringify_value(arg[NEW_VALUE])}")
+    return (f"Property '{get_path(path, vertex[KEY])}' "
+            f"was updated. From {stringify_value(vertex[OLD_VALUE])} "
+            f"to {stringify_value(vertex[NEW_VALUE])}")
 
 
 def stringify_value(vertex):
