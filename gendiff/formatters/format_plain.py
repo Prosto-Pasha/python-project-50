@@ -1,4 +1,4 @@
-from gendiff.formatters.format_common import format_arg
+from json import dumps
 
 
 TYPE = 0
@@ -86,5 +86,5 @@ def stringify_value(value):
             isinstance(value, bool),
             value is None
     )):
-        return format_arg(value)
+        return value if isinstance(value, str) else dumps(value)
     return f"'{value}'"

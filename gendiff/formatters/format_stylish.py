@@ -1,4 +1,4 @@
-from gendiff.formatters.format_common import format_arg
+from json import dumps
 
 
 VERTEX_TYPE_TO_INDENT = {
@@ -40,10 +40,11 @@ def format_unchanged(vertex, depth):
     """
     Формат вершины типа 'unchanged'
     """
+    value = vertex[OLD_VALUE]
     return (f'{BLANK_STR * depth}'
             f'{VERTEX_TYPE_TO_INDENT[vertex[TYPE]]}'
             f'{vertex[KEY]}: '
-            f'{format_arg(vertex[OLD_VALUE])}')
+            f'{(value if isinstance(value, str) else dumps(value))}')
 
 
 def format_added(vertex, depth):
@@ -103,4 +104,4 @@ def stringify_value(value, depth):
             result.append(value_to_str)
         result = ['{'] + result + [f'{BLANK_STR * depth}}}']
         return '\n'.join(result)
-    return format_arg(value)
+    return value if isinstance(value, str) else dumps(value)
