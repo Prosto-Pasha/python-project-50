@@ -88,19 +88,19 @@ def format_nested(vertex, depth):
             f'{get_stylish(vertex[OLD_VALUE], depth + 1)}')
 
 
-def stringify_value(vertex, depth):
+def stringify_value(value, depth):
     """
     Возвращает текстовое представление значения
     аргумента vertex в формате plain
     """
-    if isinstance(vertex, dict):
+    if isinstance(value, dict):
         depth += 1
         result = []
-        for key, value in vertex.items():
-            vertex_to_str = (f'{BLANK_STR * (depth + 1)}'
+        for key, sub_value in value.items():
+            value_to_str = (f'{BLANK_STR * (depth + 1)}'
                              f'{key}: '
-                             f'{stringify_value(value, depth)}')
-            result.append(vertex_to_str)
+                             f'{stringify_value(sub_value, depth)}')
+            result.append(value_to_str)
         result = ['{'] + result + [f'{BLANK_STR * depth}}}']
         return '\n'.join(result)
-    return format_arg(vertex)
+    return format_arg(value)

@@ -74,17 +74,17 @@ def format_changed(vertex, path):
             f"to {stringify_value(vertex[NEW_VALUE])}")
 
 
-def stringify_value(vertex):
+def stringify_value(value):
     """
     Возвращает текстовое представление значения
     аргумента vertex в формате plain
     """
-    if isinstance(vertex, dict):
+    if isinstance(value, dict):
         return '[complex value]'
     if any((
-            isinstance(vertex, int),
-            isinstance(vertex, bool),
-            vertex is None
+            isinstance(value, int),
+            isinstance(value, bool),
+            value is None
     )):
-        return format_arg(vertex)
-    return f"'{vertex}'"
+        return format_arg(value)
+    return f"'{value}'"
