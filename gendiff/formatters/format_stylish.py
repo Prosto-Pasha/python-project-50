@@ -1,7 +1,7 @@
 from gendiff.formatters.format_common import format_arg
 
 
-DIFF_TO_STR = {
+VERTEX_TYPE_TO_INDENT = {
     'added': '  + ',
     'removed': '  - ',
     'unchanged': '    ',
@@ -41,7 +41,7 @@ def format_unchanged(vertex, depth):
     Формат вершины типа 'unchanged'
     """
     return (f'{BLANK_STR * depth}'
-            f'{DIFF_TO_STR[vertex[TYPE]]}'
+            f'{VERTEX_TYPE_TO_INDENT[vertex[TYPE]]}'
             f'{vertex[KEY]}: '
             f'{format_arg(vertex[OLD_VALUE])}')
 
@@ -51,7 +51,7 @@ def format_added(vertex, depth):
     Формат вершины типа 'added'
     """
     return (f'{BLANK_STR * depth}'
-            f'{DIFF_TO_STR["added"]}'
+            f'{VERTEX_TYPE_TO_INDENT["added"]}'
             f'{vertex[KEY]}: '
             f'{stringify_value(vertex[NEW_VALUE], depth)}')
 
@@ -61,7 +61,7 @@ def format_removed(vertex, depth):
     Формат вершины типа 'removed'
     """
     return (f'{BLANK_STR * depth}'
-            f'{DIFF_TO_STR["removed"]}'
+            f'{VERTEX_TYPE_TO_INDENT["removed"]}'
             f'{vertex[KEY]}: '
             f'{stringify_value(vertex[OLD_VALUE], depth)}')
 
@@ -83,7 +83,7 @@ def format_nested(vertex, depth):
     Формат вершины типа 'nested'
     """
     return (f'{BLANK_STR * depth}'
-            f'{DIFF_TO_STR[vertex[TYPE]]}'
+            f'{VERTEX_TYPE_TO_INDENT[vertex[TYPE]]}'
             f'{vertex[KEY]}: '
             f'{get_stylish(vertex[OLD_VALUE], depth + 1)}')
 
